@@ -1,0 +1,22 @@
+.BoxOfCardsC {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens se movam para a linha de baixo quando necessário */
+    justify-content:space-between; /* Alinha os itens de forma espaçada */
+    gap:3px;
+    width: 100%;
+    font-family: "Raleway";
+
+}
+
+.CinemaCard {
+    width: calc(33.3% - 30px); /* Ajusta a largura para que cada item ocupe 1/3 do espaço com uma margem */
+    padding: 1em;
+    width: 20em;
+    height: 5em;
+    margin: 2px;
+    transform: translateX(0.5em);
+    color: white;
+    border-radius: 10px; /* Opcional, caso queira bordas arredondadas nos cards */
+    background-color: #142733;
+    cursor: pointer;
+}
