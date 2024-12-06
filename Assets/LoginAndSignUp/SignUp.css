@@ -1,0 +1,91 @@
+body{
+    margin: 0;
+    background-image: url("../../Assets/movie_teather.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+/* Estilos para o link de voltar à página principal */
+.backToMain {
+    position: fixed;
+    font-family: 'Courier New', Courier, monospace;
+    left: 10px;  /* Ajusta a posição da esquerda */
+    top: 10px;   /* Ajusta a posição do topo */
+}
+
+.backToMain a {
+    text-decoration: none;
+    color: black;
+}
+
+.backToMain h1 {
+    font-size: 3em;
+    transform: translate(1em, -0.5em);
+    background-color: rgba(234, 10, 10, 0.6); /* Cor de fundo com opacidade de 60% */
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    transition: color 0.3s ease;  /* Adiciona uma transição suave */
+}
+
+.backToMain h1:hover {
+    color: black;  /* Cor ao passar o mouse */
+}
+
+.FormCentralizer{
+    font-family: "Roboto Condensed", sans-serif;;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Preenche toda a altura da tela */
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+.SignUp {
+    background-color: #131b29;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Largura máxima do formulário */
+}
+.SignUp h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.SignUp label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.SignUp input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+/* Flexbox para alinhar "Senha" e "Confirmar Senha" na mesma linha */
+.senha-container {
+    display: flex;
+    justify-content: space-between;
+}
+.senha-container input {
+    width: 100%; /* Ajusta o tamanho para que os campos fiquem lado a lado */
+}
+
+.SignUp input[type="submit"] {
+    background-color: #212f47;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.SignUp input[type="submit"]:hover {
+    background-color: #131b29;
+    position: relative;
+    border: solid 1px white;
+}

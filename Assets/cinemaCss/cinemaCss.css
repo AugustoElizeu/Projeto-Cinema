@@ -1,3 +1,9 @@
+.TheSection{
+    width: 90em;
+    margin-left: 21em;  
+    border-radius: 10px;
+    color: white;;
+}
 .BoxOfCardsC {
     display: flex;
     flex-wrap: wrap; /* Permite que os itens se movam para a linha de baixo quando necessário */
@@ -15,7 +21,6 @@
     height: 5em;
     margin: 2px;
     transform: translateX(0.5em);
-    color: white;
     border-radius: 10px; /* Opcional, caso queira bordas arredondadas nos cards */
     background-color: #142733;
     cursor: pointer;

@@ -14,7 +14,6 @@
 
 .FilmeCard {
     width: calc(12.5% - 10px); /* Ajusta a largura para que cada item ocupe 1/3 do espaço com uma margem */
-    text-align: center;
     padding: 5px;
     transform: translateX(0.5em);
     color: white;

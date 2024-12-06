@@ -1,0 +1,101 @@
+body{
+    margin: 0;
+    background-image: url("../../Assets/movie_teather.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Estilos para o link de voltar à página principal */
+.backToMain {
+    position: fixed;
+    font-family: 'Courier New', Courier, monospace;
+    left: 10px;  /* Ajusta a posição da esquerda */
+    top: 10px;   /* Ajusta a posição do topo */
+}
+
+.backToMain a {
+    text-decoration: none;
+    color: black;
+}
+
+.backToMain h1 {
+    font-size: 3em;
+    transform: translate(1em, -0.5em);
+    background-color: rgba(234, 10, 10, 0.6); /* Cor de fundo com opacidade de 60% */
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    transition: color 0.3s ease;  /* Adiciona uma transição suave */
+}
+
+.backToMain h1:hover {
+    color: black;  /* Cor ao passar o mouse */
+}
+
+
+.Login {
+    background-color: #131b29;
+    border-radius: 20px;
+    text-align: center;
+    width: 18%;
+    height: 30em;
+    position: fixed;
+    transform: translate(80em, 13em);
+    color: white;
+    box-shadow: 2px 2px 3px black;
+    font-family: "Roboto Condensed", sans-serif;
+    padding: 20px;
+}
+
+.Login form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinha todos os elementos ao centro */
+    justify-items: center;
+    gap: 10px;
+}
+
+.Login input[type="text"], 
+.Login input[type="password"] {
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 24px;
+    width: 90%;  /* Alinha com o botão */
+    padding: 10px;  /* Ajusta o padding para manter um tamanho consistente */
+}
+
+.Login input[type="submit"] {
+    margin-top: 10px;
+    font-size: 24px;
+    border-radius: 10px;
+    width: 85%;  /* Largura igual aos outros inputs */
+    padding: 10px;  /* Ajusta o padding do botão para igualar aos outros inputs */
+    background-color: #212f47;
+    color: white;
+    border: none;
+    cursor: pointer;  /* Adiciona um cursor para indicar que é clicável */
+}
+
+.Login input[type="submit"]:hover {
+    background-color: #131b29;
+    border: solid 1px white;
+}
+
+.Login p {
+    position: fixed;
+    top: 75%;
+}
+.Showcase {
+    font-family: "Roboto Condensed", sans-serif;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    font-size: 48px;
+    display: block;
+    position: absolute;
+    left: 10em;
+    top: 6em;
+}

@@ -2,13 +2,18 @@
 <html lang="pt-br" dir="ltr">
 <head>
     <title>CineCult - Login</title> <!-- Título da página exibido na aba do navegador -->
-    <link rel="stylesheet" href="../../Assets/LoginAndSignUp/LoginAndSignUpCss.css">
-    <link rel="stylesheet" href="../../../Assets/LoginAndSignUp/LoginAndSignUpCss.css">
+    <link rel="stylesheet" href="../../../Assets/LoginAndSignUp/Login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <nav class="backToMain">
+        <a href="/index.html"><h1>Cine<span style="color: azure; text-shadow: 2px 2px 3px black;">cult</span></h1></a>
+    </nav>
     <section>
-        <h1>Encontre seu próximo filme favorito aqui!!!</h1>
+        <h1 class="Showcase">Encontre sua próxima experiencia <br> <span style="color:#D2BD96">Cinematográfica aqui!!!</span></h1>
     </section>
    <section class="Login">
         <form action="" method="post">
@@ -18,10 +23,10 @@
                 <input type="text" name="email" placeholder="Digite seu email">
             </label>
             <label for="password">
-                <input type="password" name="password" placeholder="Digite seu email">
+                <input type="password" name="password" placeholder="Digite sua senha">
             </label>
-            <input type="submit">
-            <p>Não possui conta ainda? <a href="">Clique aqui e cadastre-se</a></p>
+            <input type="submit" value="Entrar">
+            <p>Não possui conta ainda? <a href="/Pages//LoginAndSignUp/SignUpForm/SignUp.html">Clique aqui e cadastre-se</a></p>
         </form>
    </section>
 </body>

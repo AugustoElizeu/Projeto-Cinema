@@ -1,21 +1,23 @@
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: beige;; /* Cor de fundo */
-    color: black; /* Cor do texto */
-    text-align: center;
-    font-size: 1em;
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
-    font-family: "Raleway";
+    position: fixed; /* Torna o footer fixo */
+    bottom: 0;       /* Fixa o footer no fundo da página */
+    left: 0;         /* Alinha o footer à esquerda */
+    width: 100%;     /* O footer ocupa toda a largura da página */
+
+    background-color: beige; /* Cor de fundo */
+    color: black;            /* Cor do texto */
+    text-align: center;      /* Alinha o texto no centro */
+    font-size: 1em;          /* Tamanho da fonte */
+    padding: 5px;            /* Espaçamento interno */
+    font-family: "Raleway";  /* Fonte do texto */
+    z-index: 1000;           /* Garante que o footer fique acima de outros conteúdos */
 }
 
 footer a {
-    color: blue;
-    text-decoration: none;
+    color: blue; /* Cor do link */
+    text-decoration: none; /* Remove o sublinhado do link */
 }
 
 footer a:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Adiciona o sublinhado quando o link é hover */
 }

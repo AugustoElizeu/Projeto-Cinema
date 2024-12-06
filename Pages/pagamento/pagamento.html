@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../Assets/pagamentoCss/pagaamento.css">
+    <link rel="stylesheet" href="../../Assets/mainScreenCss/mainScreen.css">
+    <title>Formulário de Pagamento</title>
+</head>
+<body style="background-image: url('https://wallpapercave.com/wp/wp12289861.jpg');">
+    <nav class="backToMain">
+        <a href="../../index.html"><h1>Cine<span style="color: azure; text-shadow: 2px 2px 3px black;">cult</span></h1></a>
+    </nav>
+    <section class="BuyingGiantCard">
+     <section class="infoBuy" style="border-right: 1px solid #ccc;">
+        <h3>Valor Total.: R$<span>0.00</span></h3>
+        <img class="cartao" src="https://imagensemoldes.com.br/wp-content/uploads/2020/06/Desenho-Cart%C3%A3o-de-Cr%C3%A9dito-PNG.png" alt="Cartão de crédito">
+     </section>   
+     <form action="#" method="POST">
+        <label for="card-name">Nome do Titular</label>
+        <input type="text" id="card-name" name="card-name" placeholder="Nome exatamente como no cartão" required>
+
+        <label for="card-number">Número do Cartão</label>
+        <input type="text" id="card-number" name="card-number" placeholder="XXXX XXXX XXXX XXXX" required pattern="\d{4} \d{4} \d{4} \d{4}" maxlength="19">
+
+        <label for="expiration-date">Data de Expiração</label>
+        <input type="month" id="expiration-date" name="expiration-date" required>
+
+        <label for="cvv">Código de Segurança (CVV)</label>
+        <input type="number" id="cvv" name="cvv" placeholder="XXX" required maxlength="3" pattern="\d{3}">
+
+        <label for="card-type">Tipo de Cartão</label>
+        <select id="card-type" name="card-type" required>
+            <option value="visa">Visa</option>
+            <option value="mastercard">MasterCard</option>
+            <option value="amex">American Express</option>
+            <option value="discover">Discover</option>
+        </select>
+
+        <button>Pagar</button>
+    </form>
+    </section>
+</body>
+</html>

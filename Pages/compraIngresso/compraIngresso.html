@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../Assets/CompraIngressoCss/CompraIngressoCss.css">
+    <link rel="stylesheet" href="../../Assets/mainScreenCss/mainScreen.css">
+    <title>Formulário de Pagamento</title>
+</head>
+<body>
+    <nav class="backToMain">
+        <a href="../../index.html"><h1>Cine<span style="color: azure; text-shadow: 2px 2px 3px black;">cult</span></h1></a>
+    </nav>
+    <section class="BuyingGiantCard">
+     <section class="infoBuy" style="border-right: 1px solid #ccc;">
+        <h3>Nome do Filme.: Nome do Filme</h3>
+        <h4>Nome do Cinema.: Nome do Cinema</h4>
+        <h4>Horário da Sessão.: Horário da Sessão</h4>
+        <img class="cartao" src="https://imagensemoldes.com.br/wp-content/uploads/2020/06/Desenho-Cart%C3%A3o-de-Cr%C3%A9dito-PNG.png" alt="Cartão de crédito">
+     </section>   
+    <form action="/processar-compra" method="POST">
+        <h2>Compra de Ingresso</h2>
+
+        <!-- Tipo de ingresso -->
+        <label for="tipoIngresso">Escolha o tipo de ingresso:</label>
+        <select id="tipoIngresso" name="tipoIngresso" required>
+            <option value="inteira">Inteira</option>
+            <option value="meia">Meia-entrada</option>
+        </select>
+
+        <!-- Quantidade de ingressos -->
+        <label for="quantidade">Quantidade de ingressos:</label>
+        <input type="number" id="quantidade" name="quantidade" min="1" required>
+        
+        <!-- Campo de Email do usuário -->
+        <label for="email">Digite seu e-mail:</label>
+        <input type="email" id="email" name="email" placeholder="example@domain.com" required>
+        
+        <!-- Forma de pagamento -->
+        <label for="formaPagamento">Escolha a forma de pagamento:</label>
+        <input type="radio" id="credito" name="formaPagamento" value="credito" required> <label for="credito">Cartão de Crédito</label>
+        <input type="radio" id="debito" name="formaPagamento" value="debito" required> <label for="debito">Cartão de Débito</label>
+
+        <!-- Botão de envio -->
+        <button><a href="../pagamento/pagamento.html">Continuar para compra</a></button>
+      </form>
+    </section>
+</body>
+</html>

@@ -1,6 +1,3 @@
-acao1 = document.getElementById("filmes");
-acao2 = document.getElementById("cinemas");
-
 document.addEventListener('DOMContentLoaded', function() {
     // Função para carregar conteúdo de arquivos HTML para os respectivos elementos
     function loadContent(url, elementId) {
@@ -27,18 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error(`Erro inesperado ao tentar carregar ${url}: ${error.message}`);
         }
     }
-    loadContent('/Pages/NavBar/navBar.html', 'content');
+    loadContent('/Pages/LoginAndSignUp/LoginAndSignUp.html', 'main');
 
-   try {
-    // Verifica a condição
-    if (acao1.id === "filmes" && acao2.id === "cinemas") {
-        // Tenta carregar o conteúdo, caso a condição seja verdadeira
-        loadContent('/Pages/FilmesSection/filmes.html', 'filmes');
-        loadContent('/Pages/CinemaSection/cinema.html', 'cinemas');
-    }
-    } catch (error) {
-        // Se ocorrer algum erro, o bloco catch será executado
-        console.error('Algo diferente da página principal:', error);
-    }
-    loadContent('/Pages/Footer/footer.html', 'footer');
 });

@@ -1,0 +1,107 @@
+ /*Aba de fotos da página*/
+.fotos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+.banner{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.bannerCard{
+    overflow: hidden; height: 15em; width: 80em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    position: relative;
+
+}
+.Pfp{
+    position: absolute;
+    transform: translate(-35em, 1em);
+    border-radius: 10px;
+    width: 10em;
+    height: 10em;
+    border: solid 1px white;
+    z-index: 3;
+}
+ /*Aba de nome do filme e comentários */
+.Explaination{
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    width: 25%;
+    display: flex;
+    margin: auto;
+    transform: translateX(-4em);
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    position: relative;
+    margin-bottom: 70px;
+}
+
+.SessionController{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Sessions{
+    background-color: #212f47;
+    padding: 10px;
+    width: 60%;
+    height: 7em;
+    border-radius: 5px;
+    color: white;
+    margin: 10px;
+}
+.Sessions:last-child{
+    margin-bottom: 10em;
+}
+ /*Aba dos botões*/
+ .custom-button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    background-color: #131b29; /* Cor de fundo inicial */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.custom-button:hover {
+    border: 1px solid white;
+    transform: scale(1.1); /* Efeito de aumento ao passar o mouse */
+}
+
+.custom-button:focus {
+    outline: none; /* Remove o contorno padrão de foco */
+}
+
+/* Adiciona um efeito de clique */
+.custom-button:active {
+    transform: scale(0.95); /* Efeito de clique (botão encolhe) */
+}
+/*Isso é só pra ter altura*/
+.Fakefooter {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15em;
+    background-color: beige;; /* Cor de fundo */
+    color: black; /* Cor do texto */
+    text-align: center;
+    font-size: 1em;
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
+    font-family: "Raleway";
+}
