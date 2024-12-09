@@ -16,18 +16,23 @@
         <h1 class="Showcase">Encontre sua próxima experiencia <br> <span style="color:#D2BD96">Cinematográfica aqui!!!</span></h1>
     </section>
    <section class="Login">
-        <form action="" method="post">
-            <h2>Olá!</h2>
-            <h4>pronto para próxima sessão de cinema?</h4>
-            <label for="email">
-                <input type="text" name="email" placeholder="Digite seu email">
-            </label>
-            <label for="password">
-                <input type="password" name="password" placeholder="Digite sua senha">
-            </label>
-            <input type="submit" value="Entrar">
-            <p>Não possui conta ainda? <a href="/Pages//LoginAndSignUp/SignUpForm/SignUp.html">Clique aqui e cadastre-se</a></p>
-        </form>
+    <form id="loginForm">
+        <h2>Olá!</h2>
+        <h4>Pronto para a próxima sessão de cinema?</h4>
+
+        <label for="email">
+            <input type="text" name="email" id="email" placeholder="Digite seu email" required>
+        </label>
+
+        <label for="password">
+            <input type="password" name="password" id="password" placeholder="Digite sua senha" required>
+        </label>
+
+        <input type="submit" value="Entrar">
+
+        <p>Não possui conta ainda? <a href="/Pages//LoginAndSignUp/SignUpForm/SignUp.html">Clique aqui e cadastre-se</a></p>
+    </form>
+    <script src="/Pages/LoginAndSignUp/LoginForm/Login.js"></script>
    </section>
 </body>
 </html>

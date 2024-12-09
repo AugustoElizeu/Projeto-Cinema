@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Verifica a condição
     if (acao1.id === "filmes" && acao2.id === "cinemas") {
         // Tenta carregar o conteúdo, caso a condição seja verdadeira
-        loadContent('/Pages/FilmesSection/filmes.html', 'filmes');
+        loadContent('../Pages/FilmesSection/filmes.html', 'filmes');
         loadContent('/Pages/CinemaSection/cinema.html', 'cinemas');
     }
     } catch (error) {
