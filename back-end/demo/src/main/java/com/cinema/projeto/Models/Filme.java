@@ -17,7 +17,9 @@ public class Filme {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long filmesId;
 	private String nomeFilme;
-	private String UrlMoviePicture;
+	private String urlMoviePicture;
+	private String urlBannerPicture;
+	private String descricao;
 	private Integer classificacao;
 	private String genero;
 	private String lançamento;
@@ -27,20 +29,38 @@ public class Filme {
 		
 	}
 	
-	public Filme(Long filmesId, String nomeFilme, String urlMoviePicture, Integer classificacao, String genero,
+	public Filme(Long filmesId, String nomeFilme, String urlMoviePicture,String urlBannerPicture,String descricao, Integer classificacao, String genero,
 			String lançamento, String saidaCartaz) {
 		super();
 		this.filmesId = filmesId;
 		this.nomeFilme = nomeFilme;
-		UrlMoviePicture = urlMoviePicture;
+		this.urlMoviePicture = urlMoviePicture;
+		this.urlBannerPicture = urlBannerPicture;
+		this.descricao = descricao;
 		this.classificacao = classificacao;
 		this.genero = genero;
 		this.lançamento = lançamento;
 		this.saidaCartaz = saidaCartaz;
 	}
 
+	public String getUrlBannerPicture() {
+		return urlBannerPicture;
+	}
+
+	public void setUrlBannerPicture(String urlBannerPicture) {
+		this.urlBannerPicture = urlBannerPicture;
+	}
+
 	public Long getFilmesId() {
 		return filmesId;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public void setFilmesId(Long filmesId) {
@@ -56,11 +76,11 @@ public class Filme {
 	}
 
 	public String getUrlMoviePicture() {
-		return UrlMoviePicture;
+		return urlMoviePicture;
 	}
 
 	public void setUrlMoviePicture(String urlMoviePicture) {
-		UrlMoviePicture = urlMoviePicture;
+		this.urlMoviePicture = urlMoviePicture;
 	}
 
 	public Integer getClassificacao() {

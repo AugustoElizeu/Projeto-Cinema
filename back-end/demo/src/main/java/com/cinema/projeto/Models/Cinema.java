@@ -10,22 +10,92 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@AllArgsConstructor
 @Table(name="Cinemas")
 public class Cinema {
 		
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter@Setter
 	private Long cinemaId;
-	@Getter@Setter
 	private String nomeFantasia;
-	@Getter@Setter
 	private String razaoSocial;
-	@Getter@Setter
 	private String cnpj;
-	@Getter@Setter
-	private Boolean habilidado;
+	private String urlCineIcon;
+	private String urlCineBanner;
+	private Boolean habilitado;
+	
+	public Cinema() {
+		
+	}
+	
+	public Cinema(Long cinemaId, String nomeFantasia, String razaoSocial, String cnpj,String urlCineIcon ,String urlCineBanner,Boolean habilitado) {
+		super();
+		this.cinemaId = cinemaId;
+		this.nomeFantasia = nomeFantasia;
+		this.razaoSocial = razaoSocial;
+		this.cnpj = cnpj;
+		this.urlCineIcon = urlCineIcon;
+		this.urlCineBanner = urlCineBanner;
+		this.habilitado = habilitado;
+	}
+
+	public Long getCinemaId() {
+		return cinemaId;
+	}
+
+	public String getUrlCineIcon() {
+		return urlCineIcon;
+	}
+
+	public void setUrlCineIcon(String urlCineIcon) {
+		this.urlCineIcon = urlCineIcon;
+	}
+
+	public String getUrlCineBanner() {
+		return urlCineBanner;
+	}
+
+	public void setUrlCineBanner(String urlCineBanner) {
+		this.urlCineBanner = urlCineBanner;
+	}
+
+	public void setCinemaId(Long cinemaId) {
+		this.cinemaId = cinemaId;
+	}
+
+	public String getNomeFantasia() {
+		return nomeFantasia;
+	}
+
+	public void setNomeFantasia(String nomeFantasia) {
+		this.nomeFantasia = nomeFantasia;
+	}
+
+	public String getRazaoSocial() {
+		return razaoSocial;
+	}
+
+	public void setRazaoSocial(String razaoSocial) {
+		this.razaoSocial = razaoSocial;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public Boolean getHabilidado() {
+		return habilitado;
+	}
+
+	public void setHabilidado(Boolean habilidado) {
+		this.habilitado = habilidado;
+	}
+    
+	
+	
 	
 	//Lista Filmes
 	//Endreço
