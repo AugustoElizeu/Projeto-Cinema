@@ -1,9 +1,15 @@
 package com.cinema.projeto.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 
@@ -24,6 +30,10 @@ public class Filme {
 	private String genero;
 	private String lançamento;
 	private String saidaCartaz;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "filmes")
+	private List<Horario> horario = new ArrayList<>();
 	
 	public Filme() {
 		

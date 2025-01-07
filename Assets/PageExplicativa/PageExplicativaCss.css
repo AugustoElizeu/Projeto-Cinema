@@ -48,16 +48,20 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    height: 13em;
+    position: relative;
+    bottom:10em;
 }
 
 .Sessions{
     background-color: #212f47;
-    padding: 10px;
+    padding: 2em;
     width: 60%;
     height: 7em;
     border-radius: 5px;
     color: white;
     margin: 10px;
+    top:2em;
 }
 .Sessions:last-child{
     margin-bottom: 10em;

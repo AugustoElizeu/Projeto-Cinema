@@ -1,9 +1,15 @@
 package com.cinema.projeto.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +28,11 @@ public class Cinema {
 	private String urlCineIcon;
 	private String urlCineBanner;
 	private Boolean habilitado;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "cinemas")
+	private List<Horario> horario = new ArrayList<>();
+	
 	
 	public Cinema() {
 		
