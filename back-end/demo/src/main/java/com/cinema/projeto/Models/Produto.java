@@ -11,7 +11,7 @@ import lombok.Setter;
 @Entity
 @Table(name="Produto")
 public class Produto {
-	
+	//NOT USED
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Getter@Setter

@@ -35,6 +35,10 @@ public class Filme {
 	@OneToMany(mappedBy = "filmes")
 	private List<Horario> horario = new ArrayList<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "filmesPedido")
+	private List<Pedido> pedido = new ArrayList<>();
+	
 	public Filme() {
 		
 	}

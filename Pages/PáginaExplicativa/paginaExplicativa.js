@@ -100,6 +100,7 @@ async function carregarHorarios() {
         // Agora, vamos verificar se o filmeId da URL é igual ao filmeId de cada item de horário
         horarios.forEach(horario => {
             const filmeIdNoHorario = horario.filmes.filmesId; // Pega o filmesId do horário atual
+            const cinemaId = horario.cinemas.cinemaId
             const isFilmeIdIgual = filmeId == filmeIdNoHorario; // Compara o filmeId da URL com o filmeId do JSON
 
             // Se for verdadeiro e o nome do cinema ainda não foi exibido
@@ -113,6 +114,9 @@ async function carregarHorarios() {
                     // Filtra os horários para esse cinema
                     const horariosDisponiveis = horarios.filter(h => h.cinemas.nomeFantasia === nomeCinema && h.filmes.filmesId == filmeId)
                                                         .map(h => h.horario);
+                    
+                    const idHorariosDisponiveis = horarios.filter(h => h.cinemas.nomeFantasia === nomeCinema && h.filmes.filmesId == filmeId)
+                                                        .map(h => h.id);
 
                     // Criando a div para o cinema
                     const sessionController = document.createElement('div');
@@ -129,19 +133,27 @@ async function carregarHorarios() {
 
                     sessionCard.appendChild(cinemaName);
 
-                    // Adicionando os horários como links (sem o <form>)
-                    horariosDisponiveis.forEach(horario => {
-                        // Criação de um link <a> com o href para a página de compra de ingressos
+                    function divHorario(horario, haga) {
+                        const horarioId = haga;  // 'haga' será o ID do horário correspondente
+                    
+                        // Criando o link
                         const link = document.createElement('a');
-                        link.href = `../compraIngresso/compraIngresso.html?filmeId=${filmeId}&horario=${horario}`;
-
+                        link.href = `../compraIngresso/compraIngresso.html?cinemaId=${cinemaId}&filmeId=${filmeId}&horario=${horario}&horarioId=${horarioId}`;
+                    
+                        // Criação de um botão <button> com o horário
                         const button = document.createElement('button');
                         button.classList.add('custom-button');
                         button.setAttribute('data-value', horario); // Usando o horário do JSON
                         button.textContent = horario; // Exibe o horário no botão
                         link.appendChild(button); // Adiciona o botão ao link
-
-                        sessionCard.appendChild(link); // Adiciona o link com o botão ao card da sessão
+                    
+                        // Adiciona o link com o botão ao card da sessão
+                        sessionCard.appendChild(link);
+                    }
+                    
+                    // Adicionando os horários como links
+                    horariosDisponiveis.forEach((horario, index) => {
+                        divHorario(horario, idHorariosDisponiveis[index]); // Passa o horário e o ID correspondente
                     });
 
                     sessions.appendChild(sessionCard);

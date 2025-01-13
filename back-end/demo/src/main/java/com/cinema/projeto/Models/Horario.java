@@ -1,11 +1,17 @@
 package com.cinema.projeto.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity	
 public class Horario {
@@ -22,6 +28,10 @@ public class Horario {
 	@ManyToOne
 	@JoinColumn(name = "Id_Cinemas")
 	private Cinema cinemas;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "horariosPedido")
+	private List<Pedido> pedido = new ArrayList<>();
 	
 	public Horario() {
 		super();

@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name="Endereco")
 public class Endereco {
-		
+	//NOT USED
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Getter@Setter

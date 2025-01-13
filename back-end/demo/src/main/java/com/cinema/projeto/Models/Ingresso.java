@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class Ingresso {
-	
+	//NOT USED
 	@Getter@Setter
 	private String assento;
 	@Getter@Setter
