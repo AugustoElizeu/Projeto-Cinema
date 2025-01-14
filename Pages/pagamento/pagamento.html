@@ -14,9 +14,8 @@
     <section class="BuyingGiantCard">
      <section class="infoBuy" style="border-right: 1px solid #ccc;">
         <h3>Valor Total.: R$<span>0.00</span></h3>
-        <img class="cartao" src="https://imagensemoldes.com.br/wp-content/uploads/2020/06/Desenho-Cart%C3%A3o-de-Cr%C3%A9dito-PNG.png" alt="Cartão de crédito">
      </section>   
-     <form action="#" method="POST">
+     <form action="#" method="POST" id="payment-form">
         <label for="card-name">Nome do Titular</label>
         <input type="text" id="card-name" name="card-name" placeholder="Nome exatamente como no cartão" required>
 
@@ -27,7 +26,7 @@
         <input type="month" id="expiration-date" name="expiration-date" required>
 
         <label for="cvv">Código de Segurança (CVV)</label>
-        <input type="number" id="cvv" name="cvv" placeholder="XXX" required maxlength="3" pattern="\d{3}">
+        <input type="number" id="cvv" name="cvv" maxlength="3" placeholder="XXX" required pattern="\d{3}">
 
         <label for="card-type">Tipo de Cartão</label>
         <select id="card-type" name="card-type" required>
@@ -40,5 +39,6 @@
         <button>Pagar</button>
     </form>
     </section>
+    <script src="./pagamento.js"></script>
 </body>
 </html>

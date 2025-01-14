@@ -1,11 +1,10 @@
 package com.cinema.projeto.Models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Pedido {
@@ -14,23 +13,38 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPedido;
 
+    @Column(nullable = false)
     private String tipoIngresso;
+
+    @Column(nullable = false)
     private Integer qtdIngresso;
+
+    @Column(nullable = false)
     private String emailPedido;
+
+    @Column(nullable = false)
     private Boolean pagamentoConfirm;
 
-    // Relacionamento com as entidades (não é necessário criar manualmente os campos de FK)
-    @ManyToOne
-    @JoinColumn(name = "Id_Filme", insertable = false, updatable = false) // Relacionamento com Filme
-    private Filme filmesPedido;
+    private Long idFilme; // ID do Filme
+    private Long idCinema; // ID do Cinema
+    private Long idHorario; // ID do Horário
+    
+    // Construtor padrão (sem parâmetros)
+    public Pedido() {
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "Id_Cinema", insertable = false, updatable = false) // Relacionamento com Cinema
-    private Cinema cinemasPedido;
-
-    @ManyToOne
-    @JoinColumn(name = "Id_Horario", insertable = false, updatable = false) // Relacionamento com Horário
-    private Horario horariosPedido;
+    // Construtor com parâmetros
+    public Pedido(Long idPedido, String tipoIngresso, Integer qtdIngresso, String emailPedido, Boolean pagamentoConfirm,
+                  Long idFilme, Long idCinema, Long idHorario) {
+        this.idPedido = idPedido;
+        this.tipoIngresso = tipoIngresso;
+        this.qtdIngresso = qtdIngresso;
+        this.emailPedido = emailPedido;
+        this.pagamentoConfirm = pagamentoConfirm;
+        this.idFilme = idFilme;
+        this.idCinema = idCinema;
+        this.idHorario = idHorario;
+    }
 
     // Getters e Setters
     public Long getIdPedido() {
@@ -73,30 +87,28 @@ public class Pedido {
         this.pagamentoConfirm = pagamentoConfirm;
     }
 
-    // Métodos adicionais para os relacionamentos
-    public Filme getFilmesPedido() {
-        return filmesPedido;
+    public Long getIdFilme() {
+        return idFilme;
     }
 
-    public void setFilmesPedido(Filme filmesPedido) {
-        this.filmesPedido = filmesPedido;
+    public void setIdFilme(Long idFilme) {
+        this.idFilme = idFilme;
     }
 
-    public Cinema getCinemasPedido() {
-        return cinemasPedido;
+    public Long getIdCinema() {
+        return idCinema;
     }
 
-    public void setCinemasPedido(Cinema cinemasPedido) {
-        this.cinemasPedido = cinemasPedido;
+    public void setIdCinema(Long idCinema) {
+        this.idCinema = idCinema;
     }
 
-    public Horario getHorariosPedido() {
-        return horariosPedido;
+    public Long getIdHorario() {
+        return idHorario;
     }
 
-    public void setHorariosPedido(Horario horariosPedido) {
-        this.horariosPedido = horariosPedido;
+    public void setIdHorario(Long idHorario) {
+        this.idHorario = idHorario;
     }
 }
-	
 

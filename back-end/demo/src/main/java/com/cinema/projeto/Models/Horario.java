@@ -29,10 +29,6 @@ public class Horario {
 	@JoinColumn(name = "Id_Cinemas")
 	private Cinema cinemas;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "horariosPedido")
-	private List<Pedido> pedido = new ArrayList<>();
-	
 	public Horario() {
 		super();
 	}
