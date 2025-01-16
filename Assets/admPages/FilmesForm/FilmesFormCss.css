@@ -1,0 +1,90 @@
+/* Estilização geral da página */
+
+.formDiv{
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;  /* Alterei para o fundo suave */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+/* Título principal */
+h1 {
+    text-align: center;
+    color: #222;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Estilização do formulário */
+form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Estilização dos campos de input */
+label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input[type="text"], input[type="number"], input[type="date"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+textarea {
+    resize: vertical;
+}
+
+input[type="file"] {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* Estilização do botão de envio */
+input[type="submit"] {
+    background-color: #007BFF; /* Cor do botão azul */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3; /* Cor de hover mais escura */
+}
+
+/* Para dispositivos móveis */
+@media (max-width: 600px) {
+    form {
+        padding: 20px;
+    }
+
+    input[type="text"], input[type="number"], input[type="date"], textarea, input[type="file"], select {
+        font-size: 1rem;
+    }
+
+    input[type="submit"] {
+        font-size: 1.1rem;
+    }
+}
