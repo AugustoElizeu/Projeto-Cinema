@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Assets/admPages/FilmesForm/FilmesFormCss.css">
+    <link rel="stylesheet" type="text/css" href="/Assets/admPages/navBarCreate/navBar.css">
+    <title>Formulário de Filme</title>
+</head>
+<body>
+    <nav id="navC"></nav>
+    <div class="formDiv">
+    <form method="POST" enctype="multipart/form-data">
+        <h1>Cadastro de Filme</h1>
+        <label for="nomeFilme">Nome do Filme:</label>
+        <input type="text" id="nomeFilme" name="nomeFilme" required><br><br>
+
+        <label for="urlMoviePicture">Imagem do Filme:</label>
+        <input type="file" id="urlMoviePicture" name="urlMoviePicture" accept="image/*" required><br><br>
+
+        <label for="urlBannerPicture">Banner do Filme:</label>
+        <input type="file" id="urlBannerPicture" name="urlBannerPicture" accept="image/*" required><br><br>
+
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" rows="4" cols="50" required></textarea><br><br>
+
+        <label for="classificacao">Classificação:</label>
+        <input type="number" id="classificacao" name="classificacao" min="0" max="18" required><br><br>
+
+        <label for="genero">Gênero:</label>
+        <input type="text" id="genero" name="genero" required><br><br>
+
+        <label for="lancamento">Data de Lançamento:</label>
+        <input type="date" id="lancamento" name="lancamento" required><br><br>
+
+        <label for="saidaCartaz">Data de Saída de Cartaz:</label>
+        <input type="date" id="saidaCartaz" name="saidaCartaz" required><br><br>
+
+        <input type="submit" value="Salvar Filme">
+    </form>
+    </div>
+    <script src="/Pages/admPages/3-CreateFunction/routerAdmGreen.js"></script>
+    <script src="/Pages/admPages/3-CreateFunction/FilmesForm/criarFilmes.js"> </script>
+</body>
+</html>

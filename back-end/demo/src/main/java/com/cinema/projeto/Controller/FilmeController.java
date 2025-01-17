@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cinema.projeto.DTO.FilmesNameDTO;
 import com.cinema.projeto.Models.Filme;
 import com.cinema.projeto.Repositories.FilmeRepository;
 
@@ -44,6 +46,23 @@ public class FilmeController {
         return filmeRepository.findById(id)
                 .map(record -> ResponseEntity.ok().body(record))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    
+    @GetMapping("/shortfilmes")
+    public List<FilmesNameDTO> listarFilmes() {
+        List<Filme> filmes = filmeRepository.findAll();
+        return filmes.stream()
+                     .map(f -> new FilmesNameDTO(
+                            f.getFilmesId(), 
+                            f.getNomeFilme(), 
+                            f.getUrlMoviePicture(), 
+                            f.getUrlBannerPicture(),
+                            f.getDescricao(),
+                            f.getClassificacao(),
+                            f.getGenero(),
+                            f.getLançamento(),
+                            f.getSaidaCartaz()))  // Converte Filme para FilmesDTO
+                     .collect(Collectors.toList());
     }
 
     @PostMapping("/criarfilme")

@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Selecionando o formulário
     const form = document.querySelector('form');
+
+    // Defina o tamanho máximo de arquivo permitido (em bytes)
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;  // 10MB
 
     // Evento de envio do formulário
     form.addEventListener('submit', function (event) {
@@ -15,6 +17,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const genero = document.getElementById('genero').value;
         const lancamento = document.getElementById('lancamento').value;
         const saidaCartaz = document.getElementById('saidaCartaz').value;
+
+        // Verificar se os arquivos são maiores que o tamanho máximo permitido
+        if (urlMoviePicture && urlMoviePicture.size > MAX_FILE_SIZE) {
+            alert('O tamanho da imagem do filme excede o limite de 10MB.');
+            return;
+        }
+
+        if (urlBannerPicture && urlBannerPicture.size > MAX_FILE_SIZE) {
+            alert('O tamanho da imagem do banner excede o limite de 10MB.');
+            return;
+        }
 
         // Criando um objeto FormData para enviar os dados incluindo os arquivos
         const formData = new FormData();

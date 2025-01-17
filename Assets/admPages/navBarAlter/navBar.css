@@ -1,0 +1,67 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%; /* Garante que o body ocupe toda a largura da tela */
+    height: 100%; /* Garante que o body ocupe toda a altura da tela */
+    font-family: 'Courier New', Courier, monospace;
+}
+.navBarMenu{
+   margin: 0;
+   background-color: yellow;
+   width: 100%;
+   a{
+       text-decoration: none;
+       color:black;
+   }
+   h1{
+       font-size: 3em;
+       transform: translate(1em,-0.5em);
+   }
+   .upperBar{
+       display: flex;
+       ul{list-style: none; display: flex;}
+       height: 4rem;
+       width: 100%;
+       li {
+        color: black;
+        padding: 5px;
+        width: 9em;
+        height: 2em;
+        font-weight: bold;
+        display: flex; /* Usado para centralizar o texto dentro do li */
+        justify-content: center; /* Centraliza horizontalmente */
+        align-items: center; /* Centraliza verticalmente */
+        position: relative;
+        left: 70rem; /* Distância da borda direita */
+        top:5px;
+        cursor: pointer; /* Muda o cursor para indicar que é clicável */
+        z-index: 1000; /* Garante que o botão fique acima de outros conteúdos */
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+       }
+       li:hover {
+           color: bisque;
+        }
+   }
+
+   .underBar{
+       background-color: bisque;
+       width: 100%;
+       ul{list-style: none; display: flex;}
+       li {
+        border-radius: 10px;
+        width: 9em;
+        height: 2em;
+        color: black;
+        display: flex; /* Usado para centralizar o texto dentro do li */
+        justify-content: center; /* Centraliza horizontalmente */
+        align-items: center; /* Centraliza verticalmente */
+        position: relative;
+        cursor: pointer; /* Muda o cursor para indicar que é clicável */
+        z-index: 1000; /* Garante que o botão fique acima de outros conteúdos */
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+       }
+       li:hover {
+        color: #444;
+        }
+   }
+}

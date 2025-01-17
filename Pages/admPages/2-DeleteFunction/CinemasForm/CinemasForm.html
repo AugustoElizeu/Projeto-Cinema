@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Assets/admPages/CinemasForm/CinemasFormCss.css">
+    <link rel="stylesheet" href="/Assets/admPages/navBarDelete/navBar.css">
+    <title>Cadastro de Cinema</title>
+</head>
+<body>
+    <div id="navD"></div>
+    <div class="formDiv">
+    <form id="cinemaForm" method="POST" enctype="multipart/form-data">
+        <h1>Cadastro de Cinema</h1>
+        <label for="nomeFantasia">Nome Fantasia:</label>
+        <input type="text" id="nomeFantasia" name="nomeFantasia" required><br><br>
+
+        <label for="razaoSocial">Razão Social:</label>
+        <input type="text" id="razaoSocial" name="razaoSocial" required><br><br>
+
+        <label for="cnpj">CNPJ:</label>
+        <input type="text" id="cnpj" name="cnpj" required><br><br>
+
+        <label for="urlCineIcon">Ícone do Cinema:</label>
+        <input type="file" id="urlCineIcon" name="urlCineIcon" accept="image/*" required><br><br>
+
+        <label for="urlCineBanner">Banner do Cinema:</label>
+        <input type="file" id="urlCineBanner" name="urlCineBanner" accept="image/*" required><br><br>
+
+        <label for="habilidado">Habilitado:</label>
+        <select id="habilidado" name="habilidado" required>
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+        </select><br><br>
+
+        <input type="submit" value="Salvar Cinema">
+    </form>
+    </div>
+    <script src="/Pages/admPages/2-DeleteFunction/routerAdmRed.js"></script>
+    <script src="/Pages/admPages/3-CreateFunction/CinemasForm/criarCinemas.js"> </script>
+</body>
+</html>

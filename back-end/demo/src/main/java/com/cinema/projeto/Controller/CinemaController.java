@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cinema.projeto.DTO.CinemasNameDTO;
 import com.cinema.projeto.Models.Cinema;
 import com.cinema.projeto.Repositories.CinemaRepository;
 
@@ -45,6 +47,14 @@ public class CinemaController {
         return cineRepository.findById(id)
                 .map(record -> ResponseEntity.ok().body(record))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    
+    @GetMapping("/shortcinemas")
+    public List<CinemasNameDTO> listarCinemas() {
+        List<Cinema> cinemas = cineRepository.findAll();
+        return cinemas.stream()
+                      .map(c -> new CinemasNameDTO(c.getCinemaId(), c.getNomeFantasia()))  // Converte Cinema para DTO
+                      .collect(Collectors.toList());
     }
 
     @PostMapping("/criarcinema")
