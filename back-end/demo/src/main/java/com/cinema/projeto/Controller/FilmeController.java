@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,7 +67,7 @@ public class FilmeController {
                             f.getSaidaCartaz()))  // Converte Filme para FilmesDTO
                      .collect(Collectors.toList());
     }
-
+    //Criar Dados
     @PostMapping("/criarfilme")
     public ResponseEntity<Filme> criarFilme(
             @RequestParam("nomeFilme") String nomeFilme,
@@ -140,5 +143,66 @@ public class FilmeController {
 
         // Retorna o nome do arquivo salvo para ser salvo no banco de dados
         return nomeArquivo;
-    }	
+    }
+    
+    //Atualizar Dados
+    
+    @PutMapping("/atualizarfilme/{id}")
+    public ResponseEntity<Filme> atualizarFilme(
+            @PathVariable("id") Long id,
+            @RequestParam("nomeFilme") String nomeFilme,
+            @RequestParam(value = "urlMoviePicture", required =  false) MultipartFile urlMoviePicture,
+            @RequestParam(value = "urlBannerPicture", required = false) MultipartFile urlBannerPicture,
+            @RequestParam("descricao") String descricao,
+            @RequestParam("classificacao") Integer classificacao,
+            @RequestParam("genero") String genero,
+            @RequestParam("lancamento") String lancamento,
+            @RequestParam("saidaCartaz") String saidaCartaz) {
+
+        try {
+            // Tente buscar o filme pelo ID
+            Optional<Filme> optionalFilme = filmeRepository.findById(id);
+
+            if (!optionalFilme.isPresent()) {
+                // Se o filme não for encontrado, retorne um erro 404
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            // Filme encontrado
+            Filme filme = optionalFilme.get();
+
+            // Atualizar os campos do filme com os dados recebidos
+            filme.setNomeFilme(nomeFilme);
+            filme.setDescricao(descricao);
+            filme.setClassificacao(classificacao);
+            filme.setGenero(genero);
+            filme.setLançamento(lancamento);
+            filme.setSaidaCartaz(saidaCartaz);
+
+            // Se a URL da imagem do filme foi fornecida (caso o usuário tenha enviado uma nova), atualizar a URL
+            if (urlMoviePicture != null && !urlMoviePicture.isEmpty()) {
+                String nomeImagemFilme = salvarArquivo(urlMoviePicture); // Salva a imagem
+                String urlCompletaFilme = "http://localhost:8080/imagens/filmes/" + nomeImagemFilme;
+                filme.setUrlMoviePicture(urlCompletaFilme); // Atualiza com a URL da imagem
+            }
+
+            // Se a URL da imagem do banner foi fornecida (caso o usuário tenha enviado uma nova), atualizar a URL
+            if (urlBannerPicture != null && !urlBannerPicture.isEmpty()) {
+                String nomeBannerFilme = salvarArquivo(urlBannerPicture); // Salva a imagem
+                String urlCompletaBanner = "http://localhost:8080/imagens/filmes/" + nomeBannerFilme;
+                filme.setUrlBannerPicture(urlCompletaBanner); // Atualiza com a URL do banner
+            }
+
+            // Salvar o filme atualizado no banco de dados
+            filmeRepository.save(filme);
+
+            // Retornar a resposta com o filme atualizado
+            return ResponseEntity.status(HttpStatus.OK).body(filme);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }

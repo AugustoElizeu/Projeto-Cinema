@@ -4,25 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Assets/admPages/FilmesForm/FilmesFormCss.css">
-    <link rel="stylesheet" href="/Assets/admPages/navBarDelete/navBar.css">
+    <link rel="stylesheet" href="/Assets/admPages/navBarAlter/navBar.css">
     <title>Formulário de Filme</title>
 </head>
 <body>
-    <nav id="navD"></nav>
+    <nav id="navA"></nav>
     <div class="formDiv">
-    <form method="POST" enctype="multipart/form-data">
-        <h1>Cadastro de Filme</h1>
+    <!-- Formulário para Buscar Filme -->
+    <form id="buscarFilmeForm">
+        <label for="nomeFilme">Escolha o Filme:</label>
+        <select id="nomeFilme" name="nomeFilme" required>
+            <option value="">Selecione um filme</option>
+        </select>
+        <input type="submit" value="Carregar Dados do Filme">
+    </form>
+
+    <!-- Formulário para Atualizar Filme -->
+    <form id="atualizarFilmeForm">
         <label for="nomeFilme">Nome do Filme:</label>
-        <input type="text" id="nomeFilme" name="nomeFilme" required><br><br>
-
-        <label for="urlMoviePicture">Imagem do Filme:</label>
-        <input type="file" id="urlMoviePicture" name="urlMoviePicture" accept="image/*" required><br><br>
-
-        <label for="urlBannerPicture">Banner do Filme:</label>
-        <input type="file" id="urlBannerPicture" name="urlBannerPicture" accept="image/*" required><br><br>
+        <input type="text" id="nomeFilme1" name="nomeFilme" required><br><br>
 
         <label for="descricao">Descrição:</label>
-        <textarea id="descricao" name="descricao" rows="4" cols="50" required></textarea><br><br>
+        <textarea id="descricao" name="descricao" required></textarea><br><br>
 
         <label for="classificacao">Classificação:</label>
         <input type="number" id="classificacao" name="classificacao" min="0" max="18" required><br><br>
@@ -36,10 +39,18 @@
         <label for="saidaCartaz">Data de Saída de Cartaz:</label>
         <input type="date" id="saidaCartaz" name="saidaCartaz" required><br><br>
 
-        <input type="submit" value="Salvar Filme">
+        <label for="urlMoviePicture">Imagem do Filme:</label>
+        <img id="imagemFilme" alt="Imagem do Filme" width="200"><br>
+        <input type="file" id="urlMoviePicture" name="urlMoviePicture" accept="image/*"><br><br>
+
+        <label for="urlBannerPicture">Banner do Filme:</label>
+        <img id="bannerFilme" alt="Banner do Filme" width="200"><br>
+        <input type="file" id="urlBannerPicture" name="urlBannerPicture" accept="image/*"><br><br>
+
+        <input type="submit" value="Atualizar Filme">
     </form>
     </div>
-    <script src="/Pages/admPages/2-DeleteFunction/routerAdmRed.js"></script>
-    <script src="/Pages/admPages/3-CreateFunction/FilmesForm/criarFilmes.js"> </script>
+    <script src="/Pages/admPages/1-AlterFunction/routerAdmYellow.js"></script>
+    <script src="../FilmesForm/atualizarFilmes.js"> </script>
 </body>
 </html>

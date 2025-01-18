@@ -49,7 +49,7 @@ async function carregarDetalhesFilme() {
         title.textContent = filme.nomeFilme;
         
         const classificacao = document.createElement('p');
-        classificacao.textContent = `Classificação: ${filme.classificacao} estrelas`;
+        classificacao.textContent = `Classificação: ${filme.classificacao} anos`;
         
         const genero = document.createElement('p');
         genero.textContent = `Gênero: ${filme.genero}`;

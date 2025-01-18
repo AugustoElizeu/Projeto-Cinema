@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -129,5 +131,59 @@ public class CinemaController {
 
         // Retorna o nome do arquivo salvo para ser salvo no banco de dados
         return nomeArquivo;
+    }
+    
+    @PutMapping("/atualizarcinema/{id}")
+    public ResponseEntity<Cinema> atualizarCinema(
+            @PathVariable("id") Long id,
+            @RequestParam("nomeFantasia") String nomeFantasia,
+            @RequestParam("razaoSocial") String razaoSocial,
+            @RequestParam("cnpj") String cnpj,
+            @RequestParam(value = "urlCineIcon", required = false) MultipartFile urlCineIcon,
+            @RequestParam(value = "urlCineBanner", required = false) MultipartFile urlCineBanner,
+            @RequestParam("habilidado") Boolean habilidado) {
+
+        try {
+            // Tente buscar o cinema pelo ID
+            Optional<Cinema> optionalCinema = cineRepository.findById(id);
+
+            if (!optionalCinema.isPresent()) {
+                // Se o cinema não for encontrado, retorne um erro 404
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            // Cinema encontrado
+            Cinema cinema = optionalCinema.get();
+
+            // Atualizar os campos do cinema com os dados recebidos
+            cinema.setNomeFantasia(nomeFantasia);
+            cinema.setRazaoSocial(razaoSocial);
+            cinema.setCnpj(cnpj);
+            cinema.setHabilidado(habilidado);
+
+            // Se a URL do ícone do cinema foi fornecida (caso o usuário tenha enviado uma nova), atualizar a URL
+            if (urlCineIcon != null && !urlCineIcon.isEmpty()) {
+                String nomeIconeCinema = salvarArquivo(urlCineIcon); // Salva o ícone
+                String urlCompletaIcone = "http://localhost:8080/imagens/cinemas/" + nomeIconeCinema;
+                cinema.setUrlCineIcon(urlCompletaIcone); // Atualiza com a URL do ícone
+            }
+
+            // Se a URL do banner do cinema foi fornecida (caso o usuário tenha enviado uma nova), atualizar a URL
+            if (urlCineBanner != null && !urlCineBanner.isEmpty()) {
+                String nomeBannerCinema = salvarArquivo(urlCineBanner); // Salva o banner
+                String urlCompletaBanner = "http://localhost:8080/imagens/cinemas/" + nomeBannerCinema;
+                cinema.setUrlCineBanner(urlCompletaBanner); // Atualiza com a URL do banner
+            }
+
+            // Salvar o cinema atualizado no banco de dados
+            cineRepository.save(cinema);
+
+            // Retornar a resposta com o cinema atualizado
+            return ResponseEntity.status(HttpStatus.OK).body(cinema);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
