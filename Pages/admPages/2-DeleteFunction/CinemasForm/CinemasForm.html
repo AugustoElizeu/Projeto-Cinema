@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Assets/admPages/CinemasForm/CinemasFormCss.css">
-    <link rel="stylesheet" href="/Assets/admPages/navBarAlter/navBar.css">
+    <link rel="stylesheet" href="/Assets/admPages/navBarDelete/navBar.css">
     <title>Cadastro de Cinema</title>
 </head>
 <body>
-    <div id="navA"></div>
+    <nav id="navD"></nav>
     <div class="formDiv">
         <!-- Formulário para Buscar Filme -->
         <form id="buscarCinemasForm">
@@ -19,35 +19,22 @@
             <input type="submit" value="Carregar Dados do Cinema">
         </form>
 
-        <form id="cinemaForm">
-            <h1>Atualizar dados do Cinema</h1>
-            <label for="nomeFantasia1">Nome Fantasia:</label>
-            <input type="text" id="nomeFantasia1" name="nomeFantasia" required><br><br>
-
-            <label for="razaoSocial">Razão Social:</label>
-            <input type="text" id="razaoSocial" name="razaoSocial" required><br><br>
-
-            <label for="cnpj">CNPJ:</label>
-            <input type="text" id="cnpj" name="cnpj" required><br><br>
+        <form id="apagarCinemaForm">
+            <h1>Apagar dados do Cinema</h1>
+            <h4 id="nomeFantasia1">Nome Fantasia.: </h4>
+            <h4 id="razaoSocial">Razão Social: </h4>
+            <h4 id="cnpj">CNPJ.:</h4>
+            <h4 id="habilidado">habilitado.:</h4>
 
             <label for="urlCineIcon">Ícone do Cinema:</label>
             <img id="imagemCinema" alt="Imagem do Cinema" width="200"><br>
-            <input type="file" id="urlCineIcon" name="urlCineIcon" accept="image/*"><br><br>
-
             <label for="urlCineBanner">Banner do Cinema:</label>
             <img id="bannerCinema" alt="Banner do Cinema" width="200"><br>
-            <input type="file" id="urlCineBanner" name="urlCineBanner" accept="image/*"><br><br>
 
-            <label for="habilidado">Habilitado:</label>
-            <select id="habilidado" name="habilidado" required>
-                <option value="true">Sim</option>
-                <option value="false">Não</option>
-            </select><br><br>
-
-            <input type="submit" value="Atualizar Cinema">
+            <input type="submit" value="Apagar Cinema">
         </form>
     </div>
-    <script src="/Pages/admPages/1-AlterFunction/routerAdmYellow.js"></script>
-    <script src="/Pages/admPages/1-AlterFunction/CinemasForm/atualizarCinemas.js"></script>
+    <script src="/Pages/admPages/2-DeleteFunction/routerAdmRed.js"></script>
+    <script src="/Pages/admPages/2-DeleteFunction/CinemasForm/apagarCinemas.js"></script>
 </body>
 </html>

@@ -2,20 +2,41 @@ package com.cinema.projeto.DTO;
 
 public class HorarioDTO {
 
+	private Long id;
     private String horario;
-    private Long idFilme;  // Para associar o Filme ao Horário
-    private Long idCinema; // Para associar o Cinema ao Horário
+    private Long idFilme;
+    private Long idCinema;
 
-    // Construtores, getters e setters
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	// Construtores, getters e setters
     public HorarioDTO() {}
 
-    public HorarioDTO(String horario, Long idFilme, Long idCinema) {
-        this.horario = horario;
-        this.idFilme = idFilme;
-        this.idCinema = idCinema;
-    }
+    
 
-    public String getHorario() {
+    public HorarioDTO(Long id, String horario, Long idFilme, Long idCinema) {
+		super();
+		this.id = id;
+		this.horario = horario;
+		this.idFilme = idFilme;
+		this.idCinema = idCinema;
+	}
+    
+    public HorarioDTO(String horario, Long idFilme, Long idCinema) {
+		super();
+		this.horario = horario;
+		this.idFilme = idFilme;
+		this.idCinema = idCinema;
+	}
+
+
+	public String getHorario() {
         return horario;
     }
 

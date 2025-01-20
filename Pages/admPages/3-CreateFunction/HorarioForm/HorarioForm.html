@@ -10,24 +10,35 @@
 <body>
     <div id="navC"></div>
     <div class="formDiv">
-    <form id="horarioForm" method="POST" enctype="multipart/form-data">
-        <h1>Cadastro de Horário de Filme</h1>
-
-        <label for="horario">Horário:</label>
-        <input type="time" id="horario" name="horario" required><br><br>
-
-        <label for="idFilme">Filme:</label>
-        <select id="idFilme" name="idFilme" required>
-            <option value="">Selecione o Filme</option>
-        </select><br><br>
-
-        <label for="idCinema">Cinema:</label>
-        <select id="idCinema" name="idCinema" required>
-            <option value="">Selecione o Cinema</option>
-        </select><br><br>
-
-        <input type="submit" value="Salvar Horário">
-    </form>
+        <form id="horarioForm" method="POST" enctype="multipart/form-data">
+            <h1>Cadastro de Horário de Filme</h1>
+        
+            <label for="idFilme">Filme:</label>
+            <select id="idFilme" name="idFilme" required>
+                <option value="">Selecione o Filme</option>
+            </select><br><br>
+        
+            <label for="idCinema">Cinema:</label>
+            <select id="idCinema" name="idCinema" required>
+                <option value="">Selecione o Cinema</option>
+            </select><br><br>
+        
+            <div id="horarios">
+                <label for="horario">Horário:</label>
+                <input type="time" id="horario" name="horarios[]" required><br><br>
+            </div>
+        
+            <div class="buttons-container">
+                <button id="addHorario" class="btn btn-primary" type="button">
+                    <i class="fa fa-plus"></i> Adicionar Horário
+                </button>
+                <button id="removeHorario" class="btn btn-danger" type="button" disabled>
+                    <i class="fa fa-minus"></i> Remover Horário
+                </button>
+            </div>
+        
+            <input type="submit" value="Salvar Horários" class="btn btn-success">
+        </form>
     </div>
     <script src="/Pages/admPages/3-CreateFunction/routerAdmGreen.js"></script>
     <script src="/Pages/admPages/3-CreateFunction/HorarioForm/criarHorarios.js"></script>

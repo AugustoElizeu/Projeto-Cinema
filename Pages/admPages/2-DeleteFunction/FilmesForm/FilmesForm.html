@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Assets/admPages/FilmesForm/FilmesFormCss.css">
-    <link rel="stylesheet" href="/Assets/admPages/navBarAlter/navBar.css">
+    <link rel="stylesheet" href="/Assets/admPages/navBarDelete/navBar.css">
     <title>Formulário de Filme</title>
 </head>
 <body>
-    <nav id="navA"></nav>
+    <nav id="navD"></nav>
     <div class="formDiv">
     <!-- Formulário para Buscar Filme -->
     <form id="buscarFilmeForm">
@@ -20,37 +20,24 @@
     </form>
 
     <!-- Formulário para Atualizar Filme -->
-    <form id="atualizarFilmeForm">
-        <label for="nomeFilme">Nome do Filme:</label>
-        <input type="text" id="nomeFilme1" name="nomeFilme" required><br><br>
-
-        <label for="descricao">Descrição:</label>
-        <textarea id="descricao" name="descricao" required></textarea><br><br>
-
-        <label for="classificacao">Classificação:</label>
-        <input type="number" id="classificacao" name="classificacao" min="0" max="18" required><br><br>
-
-        <label for="genero">Gênero:</label>
-        <input type="text" id="genero" name="genero" required><br><br>
-
-        <label for="lancamento">Data de Lançamento:</label>
-        <input type="date" id="lancamento" name="lancamento" required><br><br>
-
-        <label for="saidaCartaz">Data de Saída de Cartaz:</label>
-        <input type="date" id="saidaCartaz" name="saidaCartaz" required><br><br>
+    <form id="apagarFilmeForm">
+        <h4 id="nomeFilme1">Nome do Filme .:</h4>
+        <p id="descricao"><strong>Descrição do Filme .:</strong></p>
+        <h4 id="classificacao">Classificação Indicativa.:</h4>
+        <h4 id="genero">Genero do filme .:</h4>
+        <h4 id="lancamento">Lançamento do Filme .:</h4>
+        <h4 id="saidaCartaz">Sai de Cartaz .:</h4>
 
         <label for="urlMoviePicture">Imagem do Filme:</label>
         <img id="imagemFilme" alt="Imagem do Filme" width="200"><br>
-        <input type="file" id="urlMoviePicture" name="urlMoviePicture" accept="image/*"><br><br>
 
         <label for="urlBannerPicture">Banner do Filme:</label>
         <img id="bannerFilme" alt="Banner do Filme" width="200"><br>
-        <input type="file" id="urlBannerPicture" name="urlBannerPicture" accept="image/*"><br><br>
 
-        <input type="submit" value="Atualizar Filme">
+        <input type="submit" value="Apagar Filme">
     </form>
     </div>
-    <script src="/Pages/admPages/1-AlterFunction/routerAdmYellow.js"></script>
-    <script src="../FilmesForm/atualizarFilmes.js"> </script>
+    <script src="/Pages/admPages/2-DeleteFunction/routerAdmRed.js"></script>
+    <script src="../FilmesForm/apagarFilmes.js"> </script>
 </body>
 </html>

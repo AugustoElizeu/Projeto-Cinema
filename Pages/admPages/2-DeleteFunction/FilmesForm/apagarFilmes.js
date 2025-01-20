@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('#atualizarFilmeForm');
+    const form = document.querySelector('#apagarFilmeForm');
     const nomeFilmeSelect = document.getElementById('nomeFilme'); // Campo de nome do filme (select)
-    
+
     let filmeId = null;  // Variável global para armazenar o ID do filme selecionado
     let defaultMoviePictureUrl = null;
     let defaultBannerPictureUrl = null;
@@ -56,12 +56,13 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Dados do filme:", data);
 
             if (data) {
-                document.getElementById('nomeFilme1').value = data.nomeFilme;
-                document.getElementById('descricao').value = data.descricao;
-                document.getElementById('classificacao').value = data.classificacao;
-                document.getElementById('genero').value = data.genero;
-                document.getElementById('lancamento').value = data.lancamento;
-                document.getElementById('saidaCartaz').value = data.saidaCartaz;
+                document.getElementById('nomeFilme1').textContent = `Nome do Filme: ${data.nomeFilme}`;
+                // Tornar a descrição em negrito
+                document.getElementById('descricao').innerHTML = `<strong>Descrição do Filme:</strong> ${data.descricao}`;
+                document.getElementById('classificacao').textContent = `Classificação Indicativa: ${data.classificacao}`;
+                document.getElementById('genero').textContent = `Gênero do Filme: ${data.genero}`;
+                document.getElementById('lancamento').textContent = `Lançamento do Filme: ${data.lançamento}`;
+                document.getElementById('saidaCartaz').textContent = `Sai de Cartaz: ${data.saidaCartaz}`;
 
                 // Salvar as URLs das imagens no frontend
                 defaultMoviePictureUrl = data.urlMoviePicture;
@@ -78,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Evento de envio do formulário para atualizar o filme
+    // Evento de envio do formulário para apagar o filme
     form.addEventListener('submit', function (event) {
         event.preventDefault();  // Previne o comportamento padrão de envio do formulário
 
@@ -87,65 +88,32 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Coletando os dados do formulário
-        const nomeFilme = document.getElementById('nomeFilme1').value;
-
-        // Pegando os arquivos das imagens do input[type="file"]
-        const moviePictureInput = document.getElementById('urlMoviePicture'); // Input do filme
-        const bannerPictureInput = document.getElementById('urlBannerPicture');  // Input do banner
-
-        // Inicializando as variáveis para os arquivos
-        let moviePictureFile = moviePictureInput.files[0]; // Arquivo do filme (se selecionado)
-        let bannerPictureFile = bannerPictureInput.files[0]; // Arquivo do banner (se selecionado)
-
-        // Coletando os outros dados
-        const descricao = document.getElementById('descricao').value;
-        const classificacao = document.getElementById('classificacao').value;
-        const genero = document.getElementById('genero').value;
-        const lancamento = document.getElementById('lancamento').value;
-        const saidaCartaz = document.getElementById('saidaCartaz').value;
-
-        // Criando o FormData
-        const formData = new FormData();
-        formData.append('nomeFilme', nomeFilme);
-        formData.append('descricao', descricao);
-        formData.append('classificacao', classificacao);
-        formData.append('genero', genero);
-        formData.append('lancamento', lancamento);
-        formData.append('saidaCartaz', saidaCartaz);
-
-        // Se o usuário selecionou uma imagem, anexa ao FormData
-        if (moviePictureFile) {
-            formData.append('urlMoviePicture', moviePictureFile);  // Enviar arquivo de imagem do filme
-        } else {
-            // Se não houver nova imagem, envia nada para o campo urlMoviePicture (não adiciona no FormData)
-            // O backend deve lidar com a ausência dessa parte corretamente (ou usar a URL padrão)
+        // Confirmar a exclusão do filme
+        if (confirm('Tem certeza que deseja apagar este filme?')) {
+            // Usando a URL correta para deletar
+            fetch(`http://localhost:8080/api/filmes/deletarfilme/${filmeId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro ao apagar o filme: ${response.status}`);
+                }
+                alert('Filme apagado com sucesso!');
+                // Limpar os dados do filme na tela após exclusão
+                document.getElementById('nomeFilme1').textContent = 'Nome do Filme:';
+                document.getElementById('descricao').textContent = 'Descrição do Filme:';
+                document.getElementById('classificacao').textContent = 'Classificação Indicativa:';
+                document.getElementById('genero').textContent = 'Gênero do Filme:';
+                document.getElementById('lancamento').textContent = 'Lançamento do Filme:';
+                document.getElementById('saidaCartaz').textContent = 'Sai de Cartaz:';
+                document.getElementById("imagemFilme").src = '';
+                document.getElementById("bannerFilme").src = '';
+                carregarFilmes();  // Recarregar os filmes na lista
+            })
+            .catch(error => {
+                console.error('Erro ao apagar filme:', error);
+                alert('Erro ao apagar filme. Verifique o console para mais detalhes.');
+            });
         }
-
-        if (bannerPictureFile) {
-            formData.append('urlBannerPicture', bannerPictureFile);  // Enviar arquivo de imagem do banner
-        } else {
-            // Se não houver novo banner, envia nada para o campo urlBannerPicture (não adiciona no FormData)
-        }
-
-        // Enviar os dados para a API
-        fetch(`http://localhost:8080/api/filmes/atualizarfilme/${filmeId}`, {
-            method: 'PUT',  // Usar PUT para atualizar
-            body: formData  // Usando FormData, não é necessário definir Content-Type
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro HTTP: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            alert('Filme atualizado com sucesso!');
-        })
-        .catch(error => {
-            console.error('Erro ao enviar os dados:', error);
-            alert('Erro ao atualizar filme. Verifique o console para mais detalhes.');
-        });
     });
-
 });

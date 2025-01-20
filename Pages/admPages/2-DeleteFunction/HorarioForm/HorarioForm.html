@@ -4,32 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Assets/admPages/CinemasForm/CinemasFormCss.css">
-    <link rel="stylesheet" href="/Assets/admPages/navBarDelete/navBar.css">
+    <link rel="stylesheet" href="/Assets/admPages/CinemasForm/horarioFormCss.css">
+    <link rel="stylesheet" type="text/css" href="/Assets/admPages/navBarDelete/navBar.css">
     <title>Cadastro de Horário de Filme</title>
 </head>
 <body>
     <div id="navD"></div>
     <div class="formDiv">
-    <form id="horarioForm" method="POST" enctype="multipart/form-data">
-        <h1>Cadastro de Horário de Filme</h1>
-
-        <label for="horario">Horário:</label>
-        <input type="time" id="horario" name="horario" required><br><br>
-
-        <label for="idFilme">Filme:</label>
-        <select id="idFilme" name="idFilme" required>
-            <option value="">Selecione o Filme</option>
-        </select><br><br>
-
-        <label for="idCinema">Cinema:</label>
-        <select id="idCinema" name="idCinema" required>
-            <option value="">Selecione o Cinema</option>
-        </select><br><br>
-
-        <input type="submit" value="Salvar Horário">
-    </form>
+        <form id="horarioForm" method="POST" enctype="multipart/form-data">
+            <h1>Cadastro de Horário de Filme</h1>
+        
+            <label for="idFilme">Filme:</label>
+            <select id="idFilme" name="idFilme" required>
+                <option value="">Selecione o Filme</option>
+            </select><br><br>
+        
+            <label for="idCinema">Cinema:</label>
+            <select id="idCinema" name="idCinema" required>
+                <option value="">Selecione o Cinema</option>
+            </select><br><br>
+        
+            <div id="horarios">
+                <label for="horario">Horário:</label>
+                <input type="time" id="horario" name="horarios[]" required><br><br>
+            </div>
+        
+            <input type="submit" id="salvarHorarios" value="Salvar Horários" class="btn btn-success">
+        </form>
     </div>
     <script src="/Pages/admPages/2-DeleteFunction/routerAdmRed.js"></script>
-    <script src="/Pages/admPages/3-CreateFunction/HorarioForm/criarHorarios.js"></script>
+    <script src="/Pages/admPages/2-DeleteFunction/HorarioForm/DeletarHorarios.js"></script>
 </body>
 </html>

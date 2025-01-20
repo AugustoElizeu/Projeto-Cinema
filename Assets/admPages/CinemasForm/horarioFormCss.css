@@ -1,0 +1,39 @@
+/* Container dos horários */
+#horarios {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo para cada item de horário */
+.horario-item {
+    display: flex;
+    align-items: center; /* Alinha o conteúdo verticalmente no centro */
+    margin-bottom: 10px;
+}
+
+/* Estilo para o input de horário */
+.horario-item input[type="time"] {
+    margin-right: 10px; /* Espaçamento entre o input e o botão */
+    padding: 5px;
+}
+
+/* Estilo para o botão de apagar */
+.horario-item button {
+    background-color: #dc3545; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px; /* Cantos arredondados */
+    font-size: 14px;
+}
+
+/* Estilo para o botão quando o mouse passa por cima */
+.horario-item button:hover {
+    background-color: #c82333; /* Cor mais escura quando o mouse passa por cima */
+}
+
+/* Estilo para a label */
+.horario-item label {
+    margin-right: 5px;
+}

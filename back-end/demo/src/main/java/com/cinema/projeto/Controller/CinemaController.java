@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cinema.projeto.DTO.CinemasNameDTO;
 import com.cinema.projeto.Models.Cinema;
+import com.cinema.projeto.Models.Horario;
 import com.cinema.projeto.Repositories.CinemaRepository;
+import com.cinema.projeto.Repositories.HorarioRepository;
 
 
 @RestController
@@ -34,9 +37,12 @@ import com.cinema.projeto.Repositories.CinemaRepository;
 public class CinemaController {
 
     private final CinemaRepository cineRepository;
+    private final HorarioRepository horarioRepository;
 
-    public CinemaController(CinemaRepository cineRepository) {
+
+    public CinemaController(CinemaRepository cineRepository, HorarioRepository horarioRepository) {
         this.cineRepository = cineRepository;
+        this.horarioRepository = horarioRepository;
     }
 
     @GetMapping
@@ -184,6 +190,28 @@ public class CinemaController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @DeleteMapping("/deletarcinema/{id}")
+    public ResponseEntity<String> deleteCinema(@PathVariable("id") Long id) {
+        try {
+            // Buscar os horários que referenciam o cinema
+            List<Horario> horarios = horarioRepository.findByCinemasCinemaId(id); // Aqui buscamos por cinemaId no repositório
+
+            // Se houver horários associados ao cinema, exclua-os
+            if (!horarios.isEmpty()) {
+                horarioRepository.deleteAll(horarios);
+            }
+
+            // Agora excluir o cinema
+            Cinema cinema = cineRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cinema não encontrado"));
+            cineRepository.delete(cinema);
+
+            return ResponseEntity.ok("Cinema e dependências deletadas com sucesso.");
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body("Erro ao deletar o cinema: " + e.getMessage());
         }
     }
 }

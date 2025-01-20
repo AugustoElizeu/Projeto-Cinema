@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cinema.projeto.DTO.FilmesNameDTO;
 import com.cinema.projeto.Models.Filme;
+import com.cinema.projeto.Models.Horario;
 import com.cinema.projeto.Repositories.FilmeRepository;
+import com.cinema.projeto.Repositories.HorarioRepository;
 
 @RestController
 @RequestMapping("/api/filmes")
@@ -34,12 +36,17 @@ import com.cinema.projeto.Repositories.FilmeRepository;
 public class FilmeController {
 
     private final FilmeRepository filmeRepository;
+    private final HorarioRepository horarioRepository;
 
-    public FilmeController(FilmeRepository filmeRepository) {
-        this.filmeRepository = filmeRepository;
-    }
+    
 
-    @GetMapping
+    public FilmeController(FilmeRepository filmeRepository, HorarioRepository horarioRepository) {
+		super();
+		this.filmeRepository = filmeRepository;
+		this.horarioRepository = horarioRepository;
+	}
+
+	@GetMapping
     public List<Filme> list() {
         return filmeRepository.findAll();
     }
@@ -202,6 +209,28 @@ public class FilmeController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @DeleteMapping("/deletarfilme/{id}")
+    public ResponseEntity<String> deleteFilme(@PathVariable("id") Long id) {
+        try {
+            // Buscar os horários que referenciam o filme
+            List<Horario> horarios = horarioRepository.findByFilmesFilmesId(id); // Usando 'filmesFilmesId' no repositório
+
+            // Se houver horários associados ao filme, exclua-os
+            if (!horarios.isEmpty()) {
+                horarioRepository.deleteAll(horarios);
+            }
+
+            // Agora excluir o filme
+            Filme filme = filmeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
+            filmeRepository.delete(filme);
+
+            return ResponseEntity.ok("Filme e dependências deletadas com sucesso.");
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body("Erro ao deletar o filme: " + e.getMessage());
         }
     }
 
