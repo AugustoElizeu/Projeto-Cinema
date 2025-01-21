@@ -1,6 +1,5 @@
 package com.cinema.projeto.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,7 +18,7 @@ import com.cinema.projeto.Repositories.HorarioRepository;
 @Service
 public class HorarioService {
 
-	  @Autowired
+	 @Autowired
 	    private HorarioRepository horarioRepository;
 
 	    @Autowired
@@ -28,26 +27,42 @@ public class HorarioService {
 	    @Autowired
 	    private CinemaRepository cinemaRepository;
 
+	    /**
+	     * Buscar horários com base no ID do filme e do cinema.
+	     * 
+	     * @param idFilme ID do filme.
+	     * @param idCinema ID do cinema.
+	     * @return Lista de horários associados ao filme e cinema.
+	     */
 	    public List<HorarioDTO> buscarHorariosPorFilmeECinema(Long idFilme, Long idCinema) {
+	        // Recupera o Filme e Cinema do banco de dados
 	        Filme filme = filmeRepository.findById(idFilme)
 	                .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
 
 	        Cinema cinema = cinemaRepository.findById(idCinema)
 	                .orElseThrow(() -> new RuntimeException("Cinema não encontrado"));
 
-	        // Supondo que o HorarioRepository esteja corretamente implementado
+	        // Recupera a lista de horários para o filme e cinema
 	        List<Horario> horarios = horarioRepository.findByFilmesAndCinemas(filme, cinema);
 
-	        // Agora usamos o construtor que você tem (String, Long, Long)
+	        // Mapeia os horários para um DTO (Data Transfer Object) com os detalhes necessários, incluindo o ID do horário
 	        return horarios.stream()
 	                .map(horario -> new HorarioDTO(
-	                    horario.getHorario(),  // Aqui você passa o horário específico
-	                    horario.getFilmes().getFilmesId(),  // Passa o ID do Filme
-	                    horario.getCinemas().getCinemaId()  // Passa o ID do Cinema
+	                        horario.getId(),  // ID do horário
+	                        horario.getHorario(),  // Horário
+	                        horario.getFilmes().getFilmesId(),  // ID do Filme
+	                        horario.getCinemas().getCinemaId()  // ID do Cinema
 	                ))
 	                .collect(Collectors.toList());
 	    }
-	    
+
+	    /**
+	     * Salvar novos horários para um filme e cinema.
+	     * 
+	     * @param idFilme ID do filme.
+	     * @param idCinema ID do cinema.
+	     * @param horarios Lista de horários (Strings) a serem salvos.
+	     */
 	    public void salvarHorarios(Long idFilme, Long idCinema, List<String> horarios) {
 	        // Busca o filme e o cinema pelo ID
 	        Filme filme = filmeRepository.findById(idFilme)
@@ -66,7 +81,15 @@ public class HorarioService {
 	            horarioRepository.save(horario);
 	        }
 	    }
-	    
+
+	    /**
+	     * Atualizar os horários para um filme e cinema.
+	     * Este método apaga os horários antigos e salva os novos.
+	     * 
+	     * @param idFilme ID do filme.
+	     * @param idCinema ID do cinema.
+	     * @param horarios Lista de horários (Strings) a serem salvos.
+	     */
 	    public void atualizarHorarios(Long idFilme, Long idCinema, List<String> horarios) {
 	        // Busca o filme e o cinema pelo ID
 	        Filme filme = filmeRepository.findById(idFilme)
@@ -89,5 +112,20 @@ public class HorarioService {
 	            horarioRepository.save(horario);  // Salva o novo horário
 	        }
 	    }
-	  
+
+	    /**
+	     * Deletar um horário específico pelo seu ID.
+	     * 
+	     * @param idHorario ID do horário a ser deletado.
+	     */
+	    public void deletarHorario(Long idHorario) {
+	        Optional<Horario> horarioOptional = horarioRepository.findById(idHorario);  // Agora buscamos pelo id do horário
+
+	        if (horarioOptional.isPresent()) {
+	            horarioRepository.delete(horarioOptional.get());  // Deleta o horário encontrado
+	        } else {
+	            // Lógica caso o horário não seja encontrado (por exemplo, lançar uma exceção ou apenas retornar)
+	            throw new RuntimeException("Horário não encontrado para o ID: " + idHorario);
+	        }
+	    }
 }

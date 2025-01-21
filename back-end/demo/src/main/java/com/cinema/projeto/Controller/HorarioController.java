@@ -1,7 +1,7 @@
 package com.cinema.projeto.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,17 +31,17 @@ import com.cinema.projeto.service.HorarioService;
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 public class HorarioController {
 
-	     @Autowired
-	    private FilmeRepository filmeRepository;
+	@Autowired
+    private FilmeRepository filmeRepository;
 
-	    @Autowired
-	    private CinemaRepository cinemaRepository;
+    @Autowired
+    private CinemaRepository cinemaRepository;
 
-	    @Autowired
-	    private HorarioRepository horarioRepository;
-	    
-	    @Autowired
-	    private HorarioService horarioService;
+    @Autowired
+    private HorarioRepository horarioRepository;
+    
+    @Autowired
+    private HorarioService horarioService;
 
     public HorarioController(HorarioRepository horarioRepository) {
         this.horarioRepository = horarioRepository;
@@ -80,7 +79,7 @@ public class HorarioController {
                 horarioRepository.save(horario);
             }
 
-            // Retornar uma resposta de sucesso
+            // Retornar uma resposta de sucesso;
             return ResponseEntity.status(HttpStatus.CREATED).body("Horários criados com sucesso!");
 
         } catch (Exception e) {
@@ -100,29 +99,52 @@ public class HorarioController {
     }
     
     @GetMapping("/filme/{idFilme}/cinema/{idCinema}")
-    public List<HorarioDTO> getHorariosPorFilmeECinema(@PathVariable Long idFilme, @PathVariable Long idCinema) {
-        // Chama o serviço para buscar os horários com os IDs fornecidos
-        List<HorarioDTO> horarios = horarioService.buscarHorariosPorFilmeECinema(idFilme, idCinema);
-        return horarios;
-    }
-    
-    @PutMapping("/filme/{idFilme}/cinema/{idCinema}")
-    public ResponseEntity<?> atualizarHorarios(@PathVariable Long idFilme, 
-                                               @PathVariable Long idCinema, 
-                                               @RequestBody List<String> horarios) {
-        try {
-            // Chama o serviço para atualizar os horários
-            horarioService.atualizarHorarios(idFilme, idCinema, horarios);  // Chama o método atualizado
-            
-            // Retorna uma resposta de sucesso
-            return ResponseEntity.ok("Horários atualizados com sucesso!");
-        } catch (RuntimeException e) {
-            // Caso ocorra algum erro (como não encontrar filme ou cinema)
-            return ResponseEntity.status(400).body("Falha ao atualizar os horários: " + e.getMessage());
-        } catch (Exception e) {
-            // Caso ocorra um erro inesperado no servidor
-            return ResponseEntity.status(500).body("Erro interno do servidor: " + e.getMessage());
+    public List<HorarioDTO> buscarHorariosPorFilmeECinema(@PathVariable Long idFilme, @PathVariable Long idCinema) {
+        // Recupera o filme e o cinema pelo ID, lançando exceção caso não encontrado
+        Filme filme = filmeRepository.findById(idFilme)
+                .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
+
+        Cinema cinema = cinemaRepository.findById(idCinema)
+                .orElseThrow(() -> new RuntimeException("Cinema não encontrado"));
+
+        // Recupera a lista de horários para o filme e cinema
+        List<Horario> horarios = horarioRepository.findByFilmesAndCinemas(filme, cinema);
+
+        // Mapeia os horários para DTO
+        List<HorarioDTO> horariosDTO = new ArrayList<>();
+
+        for (Horario horario : horarios) {
+            // Converte o horário para DTO
+            HorarioDTO dto = new HorarioDTO(
+                horario.getId(),                      // ID do horário
+                horario.getHorario(),                 // Horário do filme
+                horario.getFilmes().getFilmesId(),          // ID do filme associado
+                horario.getCinemas().getCinemaId()          // ID do cinema associado
+            );
+            horariosDTO.add(dto);
         }
+
+        return horariosDTO;  // Retorna a lista de DTOs
     }
-    
+    @DeleteMapping("/deletarHorario/filme/{idFilme}/cinema/{idCinema}/horario/{idHorario}")
+    public ResponseEntity<String> deletarHorario(@PathVariable Long idFilme, 
+                                                  @PathVariable Long idCinema, 
+                                                  @PathVariable Long idHorario) {
+        // Verifica se o filme existe
+        Filme filme = filmeRepository.findById(idFilme)
+                .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
+
+        // Verifica se o cinema existe
+        Cinema cinema = cinemaRepository.findById(idCinema)
+                .orElseThrow(() -> new RuntimeException("Cinema não encontrado"));
+
+        // Verifica se o horário existe e pertence ao filme e cinema especificados
+        Horario horario = horarioRepository.findByIdAndFilmesAndCinemas(idHorario, filme, cinema)
+                .orElseThrow(() -> new RuntimeException("Horário não encontrado"));
+
+        // Deleta o horário
+        horarioRepository.delete(horario);
+
+        return ResponseEntity.ok("Horário deletado com sucesso!");
+    }
 }

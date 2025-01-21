@@ -6,7 +6,7 @@ function carregarFilmes() {
             const selectFilme = document.getElementById('idFilme');
             filmes.forEach(filme => {
                 const option = document.createElement('option');
-                option.value = filme.filmesId;  // A chave do ID do filme pode variar dependendo da resposta da API
+                option.value = filme.filmesId;
                 option.textContent = filme.nomeFilme;
                 selectFilme.appendChild(option);
             });
@@ -22,7 +22,7 @@ function carregarCinemas() {
             const selectCinema = document.getElementById('idCinema');
             cinemas.forEach(cinema => {
                 const option = document.createElement('option');
-                option.value = cinema.id;  // O ID do cinema
+                option.value = cinema.id;
                 option.textContent = cinema.nomeFantasia;
                 selectCinema.appendChild(option);
             });
@@ -32,9 +32,8 @@ function carregarCinemas() {
 
 // Função para carregar os horários de um filme e cinema selecionado
 function carregarHorarios(idFilme, idCinema) {
-    // Verifica se o idFilme e idCinema estão definidos
     if (!idFilme || !idCinema) {
-        return; // Se não, não faz a requisição
+        return;
     }
 
     fetch(`http://localhost:8080/api/horarios/filme/${idFilme}/cinema/${idCinema}`)
@@ -43,7 +42,6 @@ function carregarHorarios(idFilme, idCinema) {
             const horariosDiv = document.getElementById('horarios');
             horariosDiv.innerHTML = ''; // Limpa os horários anteriores
 
-            // Verifica se a resposta é um array de horários
             if (Array.isArray(horarios) && horarios.length > 0) {
                 horarios.forEach(horario => {
                     const novoHorario = document.createElement('div');
@@ -51,11 +49,16 @@ function carregarHorarios(idFilme, idCinema) {
                     novoHorario.innerHTML = `
                         <label for="horario">Horário:</label>
                         <input type="time" name="horarios[]" value="${horario.horario}" required>
-                        <button type="button" class="btn btn-danger" onclick="removerHorario(this, ${horario.id}, ${idFilme}, ${idCinema})">Apagar</button>
+                        <button type="button" class="btn btn-danger" data-id="${horario.id}" data-filme="${idFilme}" data-cinema="${idCinema}" data-horario="${horario.horario}">Apagar</button>
                         <br><br>
                     `;
-                    console.log(horario); // Adicionando um log para verificar se o ID está vindo corretamente
                     horariosDiv.appendChild(novoHorario);
+
+                    // Associando o evento de clique ao botão "Apagar"
+                    const btnApagar = novoHorario.querySelector('.btn.btn-danger');
+                    btnApagar.addEventListener('click', function() {
+                        removerHorario(this);
+                    });
                 });
             } else {
                 horariosDiv.innerHTML = '<p>Nenhum horário encontrado para este filme e cinema.</p>';
@@ -68,15 +71,21 @@ function carregarHorarios(idFilme, idCinema) {
 }
 
 // Função para remover um horário
-function removerHorario(button, idHorario, idFilme, idCinema) {
-    // Verifica se o id do horário é válido
+function removerHorario(button) {
+    const idHorario = button.getAttribute('data-id');  // Agora estamos pegando o id do horário
+    const idFilme = button.getAttribute('data-filme');
+    const idCinema = button.getAttribute('data-cinema');
+
     if (!idHorario) {
         console.error('ID do horário não encontrado');
         return;
     }
 
-    // Faz a requisição DELETE para o backend, passando o idHorario na URL
-    fetch(`http://localhost:8080/api/horarios/filme/${idFilme}/cinema/${idCinema}/horario/${idHorario}`, {
+    // Debug: Verificando os parâmetros
+    console.log(`Remover horário: ID do horário = ${idHorario}, Filme ID = ${idFilme}, Cinema ID = ${idCinema}`);
+
+    // Realiza a requisição DELETE para o endpoint atualizado
+    fetch(`http://localhost:8080/api/horarios/deletarHorario/filme/${idFilme}/cinema/${idCinema}/horario/${idHorario}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -85,8 +94,7 @@ function removerHorario(button, idHorario, idFilme, idCinema) {
     .then(response => {
         if (response.ok) {
             // Remove o item do DOM após a resposta bem-sucedida
-            const horarioItem = button.closest('.horario-item');
-            horarioItem.remove();
+            button.closest('.horario-item').remove();
             alert('Horário apagado com sucesso!');
         } else {
             alert('Erro ao apagar o horário.');
@@ -97,9 +105,6 @@ function removerHorario(button, idHorario, idFilme, idCinema) {
         alert('Erro ao excluir o horário. Verifique o console para mais detalhes.');
     });
 }
-
-// Adicionar o evento ao botão de salvar
-document.getElementById('salvarHorarios').addEventListener('click', salvarHorarios);
 
 // Carregar filmes e cinemas quando a página for carregada
 document.addEventListener('DOMContentLoaded', function() {

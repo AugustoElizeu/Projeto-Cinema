@@ -17,4 +17,6 @@ public interface HorarioRepository extends JpaRepository<Horario,Long> {
 	 List<Horario> findByFilmesFilmesId(Long filmesId);
 	 List<Horario> findByCinemasCinemaId(Long cinemaId);
 	 List<Horario> findByFilmesAndCinemas(Filme filme, Cinema cinema);
+	 void deleteById(Long id);
+	 Optional<Horario> findByIdAndFilmesAndCinemas(Long id, Filme filmes, Cinema cinemas);
 }
