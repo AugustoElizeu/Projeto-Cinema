@@ -30,13 +30,14 @@ function carregarCinemas() {
         .catch(error => console.error('Erro ao carregar cinemas:', error));
 }
 
-// Função para carregar os horários de um filme e cinema selecionado
-function carregarHorarios(idFilme, idCinema) {
-    if (!idFilme || !idCinema) {
+// Função para carregar os horários de um filme, cinema e data selecionados
+function carregarHorarios(idFilme, idCinema, data) {
+    if (!idFilme || !idCinema || !data) {
         return;
     }
 
-    fetch(`http://localhost:8080/api/horarios/filme/${idFilme}/cinema/${idCinema}`)
+    // Realizando o filtro pelo filme, cinema e data
+    fetch(`http://localhost:8080/api/horarios/filme/${idFilme}/cinema/${idCinema}/data/${data}`)
         .then(response => response.json())
         .then(horarios => {
             const horariosDiv = document.getElementById('horarios');
@@ -61,7 +62,7 @@ function carregarHorarios(idFilme, idCinema) {
                     });
                 });
             } else {
-                horariosDiv.innerHTML = '<p>Nenhum horário encontrado para este filme e cinema.</p>';
+                horariosDiv.innerHTML = '<p>Nenhum horário encontrado para este filme, cinema e data.</p>';
             }
         })
         .catch(error => {
@@ -106,26 +107,37 @@ function removerHorario(button) {
     });
 }
 
-// Carregar filmes e cinemas quando a página for carregada
+// Carregar filmes, cinemas e horários quando a página for carregada
 document.addEventListener('DOMContentLoaded', function() {
     carregarFilmes();
     carregarCinemas();
 
-    // Evento para carregar os horários ao selecionar o filme e cinema
+    // Evento para carregar os horários ao selecionar o filme, cinema e data
     const selectFilme = document.getElementById('idFilme');
     const selectCinema = document.getElementById('idCinema');
+    const inputData = document.getElementById('dataSelecionada'); // Campo de data
 
     // Quando o filme for alterado
     selectFilme.addEventListener('change', function() {
         const idFilme = selectFilme.value;
         const idCinema = selectCinema.value;
-        carregarHorarios(idFilme, idCinema); // Carregar horários
+        const data = inputData.value; // Pega a data selecionada
+        carregarHorarios(idFilme, idCinema, data); // Carregar horários
     });
 
     // Quando o cinema for alterado
     selectCinema.addEventListener('change', function() {
         const idFilme = selectFilme.value;
         const idCinema = selectCinema.value;
-        carregarHorarios(idFilme, idCinema); // Carregar horários
+        const data = inputData.value; // Pega a data selecionada
+        carregarHorarios(idFilme, idCinema, data); // Carregar horários
+    });
+
+    // Quando a data for alterada
+    inputData.addEventListener('change', function() {
+        const idFilme = selectFilme.value;
+        const idCinema = selectCinema.value;
+        const data = inputData.value; // Pega a data selecionada
+        carregarHorarios(idFilme, idCinema, data); // Carregar horários
     });
 });

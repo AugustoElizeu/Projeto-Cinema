@@ -1,9 +1,6 @@
 package com.cinema.projeto.Models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 @Entity	
 public class Horario {
@@ -20,6 +16,7 @@ public class Horario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String horario;
+	private LocalDate data;
 	
 	@ManyToOne
 	@JoinColumn(name = "Id_Filme")
@@ -34,10 +31,11 @@ public class Horario {
 	}
 
 
-	public Horario(Long id, String horario, Filme filmes,Cinema cinemas) {
+	public Horario(Long id, String horario,LocalDate data, Filme filmes,Cinema cinemas) {
 		super();
 		this.id = id;
 		this.horario = horario;
+		this.data = data;
 		this.filmes = filmes;
 		this.cinemas = cinemas;
 	}
@@ -75,6 +73,16 @@ public class Horario {
 
 	public Cinema getCinemas() {
 		return cinemas;
+	}
+
+
+	public LocalDate getData() {
+		return data;
+	}
+
+
+	public void setData(LocalDate data) {
+		this.data = data;
 	}
 
 

@@ -19,7 +19,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         if (data === "Login realizado com sucesso!") {
             alert('Login bem-sucedido!');
             // Redireciona para outra página após login bem-sucedido
-            window.location.href = "../../../index.html";  // Redirecionamento para a página inicial, por exemplo
+            window.location.href = "../../../Pages/admPages/mainScreen.html";  // Redirecionamento para a página inicial, por exemplo
         } else {
             alert('Erro de login: ' + data);  // Exibe mensagem de erro se as credenciais forem inválidas
         }

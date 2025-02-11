@@ -1,5 +1,6 @@
 package com.cinema.projeto.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class HorarioService {
 	     * @param idCinema ID do cinema.
 	     * @return Lista de horários associados ao filme e cinema.
 	     */
-	    public List<HorarioDTO> buscarHorariosPorFilmeECinema(Long idFilme, Long idCinema) {
+	    public List<HorarioDTO> buscarHorariosPorFilmeECinema(Long idFilme, Long idCinema, LocalDate data) {
 	        // Recupera o Filme e Cinema do banco de dados
 	        Filme filme = filmeRepository.findById(idFilme)
 	                .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
@@ -42,19 +43,22 @@ public class HorarioService {
 	        Cinema cinema = cinemaRepository.findById(idCinema)
 	                .orElseThrow(() -> new RuntimeException("Cinema não encontrado"));
 
-	        // Recupera a lista de horários para o filme e cinema
-	        List<Horario> horarios = horarioRepository.findByFilmesAndCinemas(filme, cinema);
+	        // Recupera a lista de horários para o filme, cinema e data
+	        List<Horario> horarios = horarioRepository.findByFilmesAndCinemasAndData(filme, cinema, data);
 
-	        // Mapeia os horários para um DTO (Data Transfer Object) com os detalhes necessários, incluindo o ID do horário
+	        // Mapeia os horários para um DTO (Data Transfer Object), incluindo o ID do horário, horário, id do filme, id do cinema e data
 	        return horarios.stream()
 	                .map(horario -> new HorarioDTO(
 	                        horario.getId(),  // ID do horário
 	                        horario.getHorario(),  // Horário
+	                        horario.getData(),  // Data do horário (LocalDate)
 	                        horario.getFilmes().getFilmesId(),  // ID do Filme
 	                        horario.getCinemas().getCinemaId()  // ID do Cinema
 	                ))
 	                .collect(Collectors.toList());
 	    }
+
+
 
 	    /**
 	     * Salvar novos horários para um filme e cinema.
@@ -90,7 +94,7 @@ public class HorarioService {
 	     * @param idCinema ID do cinema.
 	     * @param horarios Lista de horários (Strings) a serem salvos.
 	     */
-	    public void atualizarHorarios(Long idFilme, Long idCinema, List<String> horarios) {
+	    public void atualizarHorarios(Long idFilme, Long idCinema, List<Long> idHorarios, List<String> horarios, LocalDate data) {
 	        // Busca o filme e o cinema pelo ID
 	        Filme filme = filmeRepository.findById(idFilme)
 	                .orElseThrow(() -> new RuntimeException("Filme não encontrado com id " + idFilme));
@@ -98,20 +102,37 @@ public class HorarioService {
 	        Cinema cinema = cinemaRepository.findById(idCinema)
 	                .orElseThrow(() -> new RuntimeException("Cinema não encontrado com id " + idCinema));
 
-	        // Remove os horários existentes para o filme e cinema
-	        List<Horario> horariosExistentes = horarioRepository.findByFilmesAndCinemas(filme, cinema);
-	        horarioRepository.deleteAll(horariosExistentes);  // Remove todos os horários antigos
+	        // Verifica se o número de ids de horários e horários são compatíveis
+	        if (idHorarios.size() != horarios.size()) {
+	            throw new RuntimeException("O número de idHorarios e horários não coincide.");
+	        }
 
-	        // Cria e salva os novos horários
-	        for (String horarioString : horarios) {
-	            Horario horario = new Horario();
-	            horario.setHorario(horarioString); // Assumindo que "horario" é uma String (hora)
-	            horario.setFilmes(filme);
-	            horario.setCinemas(cinema);
+	        // Para cada horário enviado, tenta atualizar ou criar um novo horário
+	        for (int i = 0; i < idHorarios.size(); i++) {
+	            Long idHorario = idHorarios.get(i);
+	            String horarioString = horarios.get(i);
 
-	            horarioRepository.save(horario);  // Salva o novo horário
+	            // Busca o horário existente
+	            Optional<Horario> horarioExistenteOpt = horarioRepository.findById(idHorario);
+	            
+	            // Se o horário existe, atualiza ele
+	            if (horarioExistenteOpt.isPresent()) {
+	                Horario horarioExistente = horarioExistenteOpt.get();
+	                horarioExistente.setHorario(horarioString); // Atualiza o horário
+	                horarioExistente.setData(data); // Atualiza a data
+	                horarioRepository.save(horarioExistente);  // Salva a atualização
+	            } else {
+	                // Caso o horário não exista, cria um novo horário
+	                Horario novoHorario = new Horario();
+	                novoHorario.setHorario(horarioString);  // Define o novo horário
+	                novoHorario.setFilmes(filme);  // Associa o filme
+	                novoHorario.setCinemas(cinema);  // Associa o cinema
+	                novoHorario.setData(data);  // Define a data
+	                horarioRepository.save(novoHorario);  // Salva o novo horário
+	            }
 	        }
 	    }
+
 
 	    /**
 	     * Deletar um horário específico pelo seu ID.

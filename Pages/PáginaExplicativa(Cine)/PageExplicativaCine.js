@@ -1,24 +1,17 @@
 const params = new URLSearchParams(window.location.search);
-const cinemaId = params.get('cinemaId'); // Pega o ID do cinema da URL
+const cinemaId = params.get('cinemaId');
 
-// Variável para armazenar os cinemas já exibidos
-let filmesExibidos = [];
+let primeiraData = null; // Armazena a primeira data encontrada
+let horariosCache = []; // Armazena os horários do back-end
 
-// Função para carregar os dados do cinema a partir do ID
 async function carregarDetalhesCinema() {
     try {
-        // Faz a requisição para buscar os dados do cinema no servidor
         const response = await fetch(`http://localhost:8080/api/cinemas/${cinemaId}`);
-        if (!response.ok) {
-            throw new Error('Erro ao carregar o cinema');
-        }
-        
-        const cinema = await response.json(); // Supondo que o servidor retorne um JSON com os dados do cinema
-        
-        // Seleciona a seção onde os dados serão inseridos (usando o id 'cineSection')
+        if (!response.ok) throw new Error('Erro ao carregar o cinema');
+
+        const cinema = await response.json();
         const cinemaSection = document.getElementById('cineSection');
-        
-        // Cria a estrutura HTML da seção explicativa
+
         const explainCard = document.createElement('section');
         explainCard.classList.add('ExplainCard');
 
@@ -29,18 +22,14 @@ async function carregarDetalhesCinema() {
         bannerCard.classList.add('bannerCard');
         const bannerImage = document.createElement('img');
         bannerImage.classList.add('banner');
-        
-        // Usa a URL de banner fornecida pelo servidor
-        bannerImage.src = cinema.urlCineBanner || 'https://ingresso-a.akamaihd.net/img/cinema/cover/cover_theater_1599.jpg'; 
+        bannerImage.src = cinema.urlCineBanner || 'https://ingresso-a.akamaihd.net/img/cinema/cover/cover_theater_1599.jpg';
         bannerImage.alt = cinema.nomeFantasia;
         bannerCard.appendChild(bannerImage);
 
         const profilePicDiv = document.createElement('div');
         const profileImage = document.createElement('img');
         profileImage.classList.add('Pfp');
-        
-        // Usa a URL de ícone fornecida pelo servidor
-        profileImage.src = cinema.urlCineIcon || 'https://ingresso-a.akamaihd.net/img/cinema/avatar/avatarcorporation_15.svg'; 
+        profileImage.src = cinema.urlCineIcon || 'https://ingresso-a.akamaihd.net/img/cinema/avatar/avatarcorporation_15.svg';
         profileImage.alt = cinema.nomeFantasia;
         profilePicDiv.appendChild(profileImage);
 
@@ -49,27 +38,24 @@ async function carregarDetalhesCinema() {
 
         const explainationDiv = document.createElement('div');
         explainationDiv.classList.add('Explaination');
-        
-        // Usando as variáveis fornecidas para preencher as informações do cinema
+
         const title = document.createElement('h1');
-        title.textContent = cinema.nomeFantasia || 'Nome não disponível'; // Nome do cinema
-        
+        title.textContent = cinema.nomeFantasia || 'Nome não disponível';
+
         const endereco = document.createElement('p');
-        endereco.innerHTML = `Endereço: <span>${cinema.razaoSocial || 'Endereço não disponível'}</span>`; // Endereço do cinema
+        endereco.innerHTML = `Endereço: <span>${cinema.razaoSocial || 'Endereço não disponível'}</span>`;
 
         const cnpj = document.createElement('p');
-        cnpj.innerHTML = `CNPJ: <span>${cinema.cnpj || 'CNPJ não disponível'}</span>`; // CNPJ do cinema
+        cnpj.innerHTML = `CNPJ: <span>${cinema.cnpj || 'CNPJ não disponível'}</span>`;
 
         const habilitado = document.createElement('p');
-        habilitado.textContent = `Habilitado: ${cinema.habilidado ? 'Sim' : 'Não'}`; // Habilitação do cinema
-        
-        // Adiciona os elementos criados ao container de explicação
+        habilitado.textContent = `Habilitado: ${cinema.habilidado ? 'Sim' : 'Não'}`;
+
         explainationDiv.appendChild(title);
         explainationDiv.appendChild(endereco);
         explainationDiv.appendChild(cnpj);
         explainationDiv.appendChild(habilitado);
 
-        // Adiciona os elementos criados à seção
         explainCard.appendChild(fotos);
         explainCard.appendChild(explainationDiv);
         cinemaSection.appendChild(explainCard);
@@ -79,100 +65,125 @@ async function carregarDetalhesCinema() {
     }
 }
 
-
-async function carregarHorarios() {
+async function carregarDatasDisponiveis() {
     try {
-        // Faz a requisição para buscar os dados de horários no servidor
-        const responseHorarios = await fetch('http://localhost:8080/api/horarios');
-        if (!responseHorarios.ok) {
-            throw new Error('Erro ao carregar os horários');
-        }
-        
-        const horarios = await responseHorarios.json(); // Supondo que o servidor retorne um JSON com os dados de horários
-        // Pega o cinemaId da URL
-        const params = new URLSearchParams(window.location.search);
-        const cinemaId = params.get('cinemaId'); // Pega o ID do cinema da URL
+        const responseHorarios = await fetch(`http://localhost:8080/api/horarios?cinemaId=${cinemaId}`);
+        if (!responseHorarios.ok) throw new Error('Erro ao carregar os horários');
 
-        // Lista para armazenar combinações de cinemas e filmes já exibidos
-        let cinemasExibidos = [];
+        horariosCache = await responseHorarios.json();
+        let datasDisponiveis = [];
 
-        // Agora, vamos verificar se o cinemaId da URL é igual ao cinemaId de cada item de horário
-        horarios.forEach(horario => {
-            const cinemaIdNoHorario = horario.cinemas.cinemaId; // Pega o cinemaId do horário atual
-            const isCinemaIdIgual = cinemaId == cinemaIdNoHorario; // Compara o cinemaId da URL com o cinemaId do JSON
+        horariosCache.forEach(horario => {
+            if (!datasDisponiveis.includes(horario.data)) {
+                datasDisponiveis.push(horario.data);
+            }
+        });
 
-            // Se for verdadeiro e o cinema já foi exibido com o filme
-            if (isCinemaIdIgual) {
-                const nomeFilme = horario.filmes.nomeFilme; // Pega o nome do filme
-                const filmeId = horario.filmes.filmesId; // Pega o filmeId
+        const daysBarSection = document.getElementById('daysBar');
+        daysBarSection.innerHTML = '';
 
-                // Verifica se o filme já foi exibido no cinema específico
-                if (!cinemasExibidos.some(item => item.cinemaId === cinemaId && item.filmeId === filmeId)) {
-                    // Filtra os horários para esse cinema e filme
-                    const horariosDisponiveis = horarios.filter(h => h.filmes.filmesId === filmeId && h.cinemas.cinemaId == cinemaId)
-                                                        .map(h => h.horario);
-                    
-                    const idHorariosDisponiveis = horarios.filter(h => h.filmes.filmesId === filmeId && h.cinemas.cinemaId == cinemaId)
-                                                        .map(h => h.id);
+        datasDisponiveis.forEach((data, index) => {
+            const radioWrapper = document.createElement('div');
+            radioWrapper.classList.add('radio-wrapper');
 
-                    // Criando a div para o cinema
-                    const sessionController = document.createElement('div');
-                    sessionController.classList.add('SessionController');
-                    
-                    const sessions = document.createElement('div');
-                    sessions.classList.add('Sessions');
-                    
-                    const sessionCard = document.createElement('div');
-                    sessionCard.classList.add('SessionCard');
-                    
-                    const filmeName = document.createElement('h1');
-                    filmeName.textContent = nomeFilme; // Nome do filme
-                    let count =0;
-                    sessionCard.appendChild(filmeName);
+            const dateButton = document.createElement('button');
+            dateButton.classList.add('date-button');
+            dateButton.textContent = new Date(data).toLocaleDateString();
+            dateButton.setAttribute('data-date', data);
 
-                    const link = document.createElement('a');
+            dateButton.addEventListener('click', () => {
+                carregarSessoesPorData(data);
+            });
 
-                    function divHorario(horario, haga) {
-                        const horarioId = haga;  // 'haga' será o ID do horário correspondente
-                    
-                        // Criando o link
-                        const link = document.createElement('a');
-                        link.href = `../compraIngresso/compraIngresso.html?cinemaId=${cinemaId}&filmeId=${filmeId}&horario=${horario}&horarioId=${horarioId}`;
-                    
-                        // Criação de um botão <button> com o horário
-                        const button = document.createElement('button');
-                        button.classList.add('custom-button');
-                        button.setAttribute('data-value', horario); // Usando o horário do JSON
-                        button.textContent = horario; // Exibe o horário no botão
-                        link.appendChild(button); // Adiciona o botão ao link
-                    
-                        // Adiciona o link com o botão ao card da sessão
-                        sessionCard.appendChild(link);
-                    }
-                    
-                    // Adicionando os horários como links
-                    horariosDisponiveis.forEach((horario, index) => {
-                        divHorario(horario, idHorariosDisponiveis[index]); // Passa o horário e o ID correspondente
-                    });
+            radioWrapper.appendChild(dateButton);
+            daysBarSection.appendChild(radioWrapper);
 
-                    sessions.appendChild(sessionCard);
-                    sessionController.appendChild(sessions);
-
-                    // Adiciona a div criada na página
-                    document.body.appendChild(sessionController);
-
-                    // Adiciona a combinação cinemaId e filmeId à lista para evitar repetição
-                    cinemasExibidos.push({ cinemaId, filmeId });
-                }
+            if (index === 0) {
+                primeiraData = data;
+                carregarSessoesPorData(data);
             }
         });
 
     } catch (error) {
-        console.error('Erro ao carregar os horários:', error);
+        console.error('Erro ao carregar as datas disponíveis:', error);
     }
 }
 
-window.addEventListener('load', () => {
-    carregarHorarios();
-    carregarDetalhesCinema();
+async function carregarSessoesPorData(dataSelecionada) {
+    try {
+        limparCinemasEHorarios();
+
+        let sessoesAgrupadas = {};
+
+        horariosCache.forEach(horario => {
+            if (horario.data === dataSelecionada) {
+                if (!horario.filmes || !horario.filmes.filmesId) {
+                    console.warn("FilmeId não encontrado para o horário:", horario);
+                    return; // Se o filmeId estiver faltando, pula para o próximo item
+                }
+
+                const filmeId = horario.filmes.filmesId;
+                const nomeFilme = horario.filmes.nomeFilme;
+
+                if (!sessoesAgrupadas[filmeId]) {
+                    sessoesAgrupadas[filmeId] = { nomeFilme, horarios: [] };
+                }
+
+                sessoesAgrupadas[filmeId].horarios.push({
+                    id: horario.id,
+                    horario: horario.horario
+                });
+            }
+        });
+
+        const sessoesContainer = document.getElementById('sessoesContainer') || document.createElement('div');
+        sessoesContainer.id = 'sessoesContainer';
+        document.body.appendChild(sessoesContainer);
+        sessoesContainer.innerHTML = '';
+
+        Object.entries(sessoesAgrupadas).forEach(([filmeId, filme]) => {
+            const sessionController = document.createElement('div');
+            sessionController.classList.add('SessionController');
+
+            const sessions = document.createElement('div');
+            sessions.classList.add('Sessions');
+
+            const sessionCard = document.createElement('div');
+            sessionCard.classList.add('SessionCard');
+
+            const filmeName = document.createElement('h1');
+            filmeName.textContent = filme.nomeFilme;
+            sessionCard.appendChild(filmeName);
+
+            filme.horarios.forEach(h => {
+                const link = document.createElement('a');
+                link.href = `../compraIngresso/compraIngresso.html?cinemaId=${cinemaId}&filmeId=${filmeId}&horario=${h.horario}&horarioId=${h.id}&data=${dataSelecionada}`;
+
+                const button = document.createElement('button');
+                button.classList.add('custom-button');
+                button.textContent = h.horario;
+                link.appendChild(button);
+                sessionCard.appendChild(link);
+            });
+
+            sessions.appendChild(sessionCard);
+            sessionController.appendChild(sessions);
+            sessoesContainer.appendChild(sessionController);
+        });
+
+    } catch (error) {
+        console.error('Erro ao carregar sessões:', error);
+    }
+}
+
+function limparCinemasEHorarios() {
+    const sessoesContainer = document.getElementById('sessoesContainer');
+    if (sessoesContainer) {
+        sessoesContainer.innerHTML = '';
+    }
+}
+
+window.addEventListener('load', async () => {
+    await carregarDetalhesCinema();
+    await carregarDatasDisponiveis(); 
 });

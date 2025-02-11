@@ -109,3 +109,111 @@
     box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
     font-family: "Raleway";
 }
+
+
+/* Estilo geral para a barra de seleção de datas */
+.daysBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 20px auto;
+    flex-wrap: wrap;
+}
+
+/* Estilo dos botões de data */
+.radio-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    margin: 10px;
+}
+
+/* Estilo do botão de data */
+.radio-wrapper button {
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #4CAF50;
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+}
+
+/* Efeito ao passar o mouse sobre o botão de data */
+.radio-wrapper button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeito quando o botão de data é clicado */
+.radio-wrapper button:active {
+    background-color: #333;
+    color: #ffeb3b;
+    border: 2px solid #ffeb3b;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo para o botão de data quando não está disponível */
+.radio-wrapper button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+    color: #999;
+    border: 2px solid #ccc;
+}
+
+/* Estilo para telas menores */
+@media (max-width: 768px) {
+    .Explaination {
+        width: 80%;
+        transform: translateX(0);
+        padding: 15px;
+    }
+
+    .fotos .bannerCard {
+        width: 100%;
+        height: auto;
+    }
+
+    .SessionController {
+        margin-bottom: 2em;
+    }
+
+    .Sessions {
+        width: 90%;
+        padding: 1.5em;
+    }
+
+    .daysBar {
+        width: 90%;
+    }
+
+    .radio-wrapper button {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bannerCard {
+        width: 100%;
+        height: auto;
+    }
+
+    .Pfp {
+        transform: translate(-30em, 0);
+        width: 10em;
+        height: 14em;
+    }
+
+    .Explaination {
+        width: 90%;
+        padding: 10px;
+    }
+}

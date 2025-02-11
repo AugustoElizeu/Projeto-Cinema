@@ -13,24 +13,40 @@
         <form id="horarioForm" method="POST" enctype="multipart/form-data">
             <h1>Cadastro de Horário de Filme</h1>
         
+            <!-- Selecção do Filme -->
             <label for="idFilme">Filme:</label>
             <select id="idFilme" name="idFilme" required>
                 <option value="">Selecione o Filme</option>
+                <!-- As opções de filmes serão carregadas dinamicamente pelo JS -->
             </select><br><br>
         
+            <!-- Selecção do Cinema -->
             <label for="idCinema">Cinema:</label>
             <select id="idCinema" name="idCinema" required>
                 <option value="">Selecione o Cinema</option>
+                <!-- As opções de cinemas serão carregadas dinamicamente pelo JS -->
             </select><br><br>
         
-            <div id="horarios">
-                <label for="horario">Horário:</label>
-                <input type="time" id="horario" name="horarios[]" required><br><br>
+            <!-- Selecção da Data -->
+            <label for="data">Data:</label>
+            <input type="date" id="data" name="data" required><br><br>
+        
+            <!-- Filtro de datas -->
+            <div id="dayBar" class="day-bar">
+                <!-- Os botões de data serão carregados dinamicamente aqui -->
             </div>
         
-            <input type="submit" id="salvarHorarios" value="Salvar Horários" class="btn btn-success">
+            <!-- Área para exibir e editar os horários -->
+            <div id="horarios">
+                <!-- Os horários serão carregados dinamicamente aqui -->
+                <!-- Cada horário será um input de tipo 'time' -->
+            </div>
+        
+            <!-- Botão para salvar as atualizações -->
+            <button type="submit" id="salvarHorarios" class="btn btn-success">Salvar Horários</button>
         </form>
     </div>
+
     <script src="/Pages/admPages/1-AlterFunction/routerAdmYellow.js"></script>
     <script src="/Pages/admPages/1-AlterFunction/HorarioForm/atualizarHorarios.js"></script>
 </body>
