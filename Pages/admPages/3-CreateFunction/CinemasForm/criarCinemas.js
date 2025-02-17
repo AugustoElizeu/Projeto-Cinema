@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const urlCineIcon = document.getElementById('urlCineIcon').files[0];  // Arquivo, não URL
         const urlCineBanner = document.getElementById('urlCineBanner').files[0];  // Arquivo, não URL
         const habilidado = document.getElementById('habilidado').value === 'true';  // Converte para booleano
+        const valorIngresso = document.getElementById('totalAmt').value; // Ajuste do ID para garantir compatibilidade
 
         // Criando um objeto FormData para enviar dados binários e texto
         const formData = new FormData();
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('urlCineIcon', urlCineIcon);
         formData.append('urlCineBanner', urlCineBanner);
         formData.append('habilidado', habilidado);
+        formData.append('valorIngresso', valorIngresso);
 
         // Enviando os dados para a API utilizando fetch
         fetch('http://localhost:8080/api/cinemas/criarcinema', {

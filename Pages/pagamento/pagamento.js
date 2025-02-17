@@ -17,18 +17,8 @@ async function carregarDetalhes() {
         }
         const pedido = await responsePedido.json();
 
-        // Verificação do tipo de ingresso e atribuição do valor
-        let valorIngresso = 0;
-        if (pedido.tipoIngresso === 'Inteira') {
-            valorIngresso = 30.00; // 30 reais para ingresso inteiro
-        } else if (pedido.tipoIngresso === 'Meia-entrada') {
-            valorIngresso = 15.00; // 15 reais para ingresso meia
-        } else {
-            throw new Error('Tipo de ingresso inválido');
-        }
-
         // Requisição para pegar os detalhes do filme, cinema e horário com base nos IDs
-        const [responseFilme, responseCinema, responseHorario] = await Promise.all([
+        const [responseFilme, responseCinema, responseHorario] = await Promise.all([ 
             fetch(`http://localhost:8080/api/filmes/${pedido.idFilme}`),
             fetch(`http://localhost:8080/api/cinemas/${pedido.idCinema}`),
             fetch(`http://localhost:8080/api/horarios/${pedido.idHorario}`)
@@ -41,6 +31,14 @@ async function carregarDetalhes() {
         const filme = await responseFilme.json();
         const cinema = await responseCinema.json();
         const horario = await responseHorario.json();
+
+        // Verificação do tipo de ingresso e atribuição do valor com base no ingresso do cinema
+        let valorIngresso = cinema.valorIngresso; // Valor do ingresso do cinema
+        if (pedido.tipoIngresso === 'Meia-entrada') {
+            valorIngresso = valorIngresso / 2; // Se for meia-entrada, divide o valor por 2
+        } else if (pedido.tipoIngresso !== 'Inteira') {
+            throw new Error('Tipo de ingresso inválido');
+        }
 
         // Atualizando a interface HTML com as informações
         const infoBuySection = document.querySelector('.infoBuy');

@@ -54,7 +54,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('nomeFantasia1').value = data.nomeFantasia;
                 document.getElementById('razaoSocial').value = data.razaoSocial;
                 document.getElementById('cnpj').value = data.cnpj;
-                document.getElementById('habilidado').value = data.habilidado ? 'true' : 'false'; // Mantenha habilidado aqui
+                document.getElementById('habilitado').value = data.habilitado ? 'true' : 'false'; // Mantenha habilidado aqui
+                document.getElementById("valorIngresso").value = data.valorIngresso;
 
                 // Salvar as URLs das imagens no frontend
                 defaultCineIconUrl = data.urlCineIcon;
@@ -84,10 +85,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const nomeFantasia = document.getElementById('nomeFantasia1').value;
         const razaoSocial = document.getElementById('razaoSocial').value;
         const cnpj = document.getElementById('cnpj').value;
-        const habilidado = document.getElementById('habilidado').value === 'true'; // Manter habilidado aqui
+        const habilitado = document.getElementById('habilitado').value === 'true'; // Manter habilidado aqui
 
         const cineIconInput = document.getElementById('urlCineIcon');
         const cineBannerInput = document.getElementById('urlCineBanner');
+
+        // Coletando o valor de 'valorIngresso' e convertendo para número
+        const valorIngresso = parseFloat(document.getElementById('valorIngresso').value);
+
+        // Verificar se o valor de ingresso é válido
+        if (isNaN(valorIngresso)) {
+            alert('Por favor, insira um valor válido para o ingresso.');
+            return;
+        }
 
         // Inicializando as variáveis para as imagens
         let cineIconFile = cineIconInput.files.length > 0 ? cineIconInput.files[0] : null;
@@ -110,8 +120,9 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('nomeFantasia', nomeFantasia);
         formData.append('razaoSocial', razaoSocial);
         formData.append('cnpj', cnpj);
-        formData.append('habilidado', habilidado); // Manter habilidado aqui
-        
+        formData.append('habilitado', habilitado); // Manter habilidado aqui
+        formData.append('valorIngresso', valorIngresso); // Enviar como número (Double)
+
         // Adicionando as imagens ao FormData, se houverem
         if (cineIconFile) {
             formData.append('urlCineIcon', cineIconFile);

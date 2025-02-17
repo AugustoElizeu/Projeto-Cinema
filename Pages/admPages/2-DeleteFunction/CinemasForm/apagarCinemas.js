@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let defaultCineIconUrl = null;
     let defaultCineBannerUrl = null;
     
+    // Ocultar formulário até que um cinema seja selecionado
+    form.style.display = 'none';
+    
     // Função para carregar todos os cinemas disponíveis
     function carregarCinemas() {
         fetch('http://localhost:8080/api/cinemas', {
@@ -37,15 +40,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // Carregar os cinemas assim que a página for carregada
     carregarCinemas();
 
-// Evento de seleção de cinema
-nomeCinemaSelect.addEventListener('change', function () {
+    // Evento de seleção de cinema
+    nomeCinemaSelect.addEventListener('change', function () {
         cinemaId = nomeCinemaSelect.value;  // Aqui o cinemaId é o valor do <option> selecionado
         console.log("ID selecionado:", cinemaId);
 
         if (!cinemaId) {
-            alert("Por favor, selecione um cinema.");
+            form.style.display = 'none'; // Ocultar formulário se nenhum cinema for selecionado
             return;
         }
+
+        form.style.display = 'block'; // Exibir formulário quando um cinema for selecionado
 
         // Buscar os dados do cinema selecionado
         fetch(`http://localhost:8080/api/cinemas/${cinemaId}`, {
@@ -60,7 +65,8 @@ nomeCinemaSelect.addEventListener('change', function () {
                 document.getElementById('nomeFantasia1').textContent = `Nome Fantasia: ${data.nomeFantasia}`;
                 document.getElementById('razaoSocial').textContent = `Razão Social: ${data.razaoSocial}`;
                 document.getElementById('cnpj').textContent = `CNPJ: ${data.cnpj}`;
-                document.getElementById('habilidado').textContent = `Habilitado.: ${data.habilidado ? 'Sim' : 'Não'}`;
+                document.getElementById('habilidado').textContent = `Habilitado: ${data.habilidado ? 'Sim' : 'Não'}`;
+                document.getElementById('valorIngresso').textContent = `Valor Ingresso: R$ ${data.valorIngresso}`;
 
                 // Salvar as URLs das imagens no frontend
                 defaultCineIconUrl = data.urlCineIcon;
@@ -101,8 +107,10 @@ nomeCinemaSelect.addEventListener('change', function () {
                 document.getElementById('razaoSocial').textContent = 'Razão Social:';
                 document.getElementById('cnpj').textContent = 'CNPJ:';
                 document.getElementById('habilidado').textContent = 'Habilitado:';
+                document.getElementById('valorIngresso').textContent = 'Valor Ingresso:';
                 document.getElementById("imagemCinema").src = '';
                 document.getElementById("bannerCinema").src = '';
+                form.style.display = 'none'; // Ocultar formulário após exclusão
                 carregarCinemas();  // Recarregar os cinemas na lista
             })
             .catch(error => {

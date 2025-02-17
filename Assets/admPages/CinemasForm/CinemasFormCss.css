@@ -4,7 +4,7 @@ body{
 }
 .formDiv{
     font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;  /* Alterei para o fundo suave */
+    background-color: #f9f9f9;
     margin: 0;
     padding: 0;
     display: flex;
@@ -41,7 +41,7 @@ label {
     display: block;
 }
 
-input[type="text"], input[type="file"], input[type="date"], select {
+input[type="text"], input[type="file"], input[type="date"], select, input[type="number"] {
     width: 100%;
     padding: 10px;
     margin: 8px 0 20px 0;
@@ -67,6 +67,17 @@ select {
     box-sizing: border-box;
 }
 
+input[type="number"] {
+    -moz-appearance: textfield; /* Remove setas do Firefox */
+    appearance: textfield; /* Remove setas de navegadores padrão */
+}
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 /* Estilização do botão de envio */
 input[type="submit"] {
     background-color: #007BFF;
@@ -85,8 +96,9 @@ input[type="submit"]:hover {
 
 /* Espaçamento extra entre campos */
 br {
-    display: none; /* Remover quebras de linha */
+    display: none;
 }
+
 /*Divide*/
 .buttons-container {
     margin-top: 20px;
@@ -160,7 +172,7 @@ button[disabled] {
         padding: 20px;
     }
 
-    input[type="text"], input[type="file"], input[type="date"], select {
+    input[type="text"], input[type="file"], input[type="date"], select, input[type="number"] {
         font-size: 1rem;
     }
 

@@ -28,17 +28,19 @@ public class Cinema {
 	private String urlCineIcon;
 	private String urlCineBanner;
 	private Boolean habilitado;
+	private Double valorIngresso;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "cinemas")
 	private List<Horario> horario = new ArrayList<>();
 	
 	
+	
 	public Cinema() {
 		
 	}
 	
-	public Cinema(Long cinemaId, String nomeFantasia, String razaoSocial, String cnpj,String urlCineIcon ,String urlCineBanner,Boolean habilitado) {
+	public Cinema(Long cinemaId, String nomeFantasia, String razaoSocial, String cnpj,String urlCineIcon ,String urlCineBanner,Boolean habilitado,Double valorIngresso) {
 		super();
 		this.cinemaId = cinemaId;
 		this.nomeFantasia = nomeFantasia;
@@ -47,6 +49,7 @@ public class Cinema {
 		this.urlCineIcon = urlCineIcon;
 		this.urlCineBanner = urlCineBanner;
 		this.habilitado = habilitado;
+		this.valorIngresso = valorIngresso;
 	}
 
 	public Long getCinemaId() {
@@ -97,18 +100,20 @@ public class Cinema {
 		this.cnpj = cnpj;
 	}
 
-	public Boolean getHabilidado() {
+	public Boolean getHabilitado() {
 		return habilitado;
 	}
 
-	public void setHabilidado(Boolean habilidado) {
+	public void setHabilitado(Boolean habilidado) {
 		this.habilitado = habilidado;
 	}
-    
-	
-	
-	
-	//Lista Filmes
-	//Endreço
 
+	public Double getValorIngresso() {
+		return valorIngresso;
+	}
+
+	public void setValorIngresso(Double valorIngresso) {
+		this.valorIngresso = valorIngresso;
+	}
+    
 }

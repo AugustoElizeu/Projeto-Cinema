@@ -70,9 +70,10 @@ public class CinemaController {
             @RequestParam("nomeFantasia") String nomeFantasia,
             @RequestParam("razaoSocial") String razaoSocial,
             @RequestParam("cnpj") String cnpj,
-            @RequestParam("habilidado") Boolean habilidado,
+            @RequestParam("habilidado") Boolean habilitado,
             @RequestParam("urlCineIcon") MultipartFile urlCineIcon,
-            @RequestParam("urlCineBanner") MultipartFile urlCineBanner) {
+            @RequestParam("urlCineBanner") MultipartFile urlCineBanner,
+            @RequestParam("valorIngresso") Double valorIngresso) {
 
         try {
             // Verifica se os arquivos foram enviados
@@ -93,9 +94,10 @@ public class CinemaController {
             cinema.setNomeFantasia(nomeFantasia);
             cinema.setRazaoSocial(razaoSocial);
             cinema.setCnpj(cnpj);
-            cinema.setHabilidado(habilidado);
+            cinema.setHabilitado(habilitado);
             cinema.setUrlCineIcon(urlCompletaIcone);
             cinema.setUrlCineBanner(urlCompletaBanner);
+            cinema.setValorIngresso(valorIngresso);
 
             // Salvar no banco de dados
             cineRepository.save(cinema);
@@ -141,13 +143,14 @@ public class CinemaController {
     
     @PutMapping("/atualizarcinema/{id}")
     public ResponseEntity<Cinema> atualizarCinema(
-            @PathVariable("id") Long id,
-            @RequestParam("nomeFantasia") String nomeFantasia,
-            @RequestParam("razaoSocial") String razaoSocial,
-            @RequestParam("cnpj") String cnpj,
-            @RequestParam(value = "urlCineIcon", required = false) MultipartFile urlCineIcon,
-            @RequestParam(value = "urlCineBanner", required = false) MultipartFile urlCineBanner,
-            @RequestParam("habilidado") Boolean habilidado) {
+    		 @PathVariable("id") Long id,
+    	        @RequestParam("nomeFantasia") String nomeFantasia,
+    	        @RequestParam("razaoSocial") String razaoSocial,
+    	        @RequestParam("cnpj") String cnpj,
+    	        @RequestParam(value = "urlCineIcon", required = false) MultipartFile urlCineIcon,
+    	        @RequestParam(value = "urlCineBanner", required = false) MultipartFile urlCineBanner,
+    	        @RequestParam("habilitado") Boolean habilitado,  // Nome correto
+    	        @RequestParam("valorIngresso") Double valorIngresso) {
 
         try {
             // Tente buscar o cinema pelo ID
@@ -165,8 +168,8 @@ public class CinemaController {
             cinema.setNomeFantasia(nomeFantasia);
             cinema.setRazaoSocial(razaoSocial);
             cinema.setCnpj(cnpj);
-            cinema.setHabilidado(habilidado);
-
+            cinema.setHabilitado(habilitado);
+            
             // Se a URL do ícone do cinema foi fornecida (caso o usuário tenha enviado uma nova), atualizar a URL
             if (urlCineIcon != null && !urlCineIcon.isEmpty()) {
                 String nomeIconeCinema = salvarArquivo(urlCineIcon); // Salva o ícone
@@ -180,7 +183,7 @@ public class CinemaController {
                 String urlCompletaBanner = "http://localhost:8080/imagens/cinemas/" + nomeBannerCinema;
                 cinema.setUrlCineBanner(urlCompletaBanner); // Atualiza com a URL do banner
             }
-
+            cinema.setValorIngresso(valorIngresso);
             // Salvar o cinema atualizado no banco de dados
             cineRepository.save(cinema);
 
