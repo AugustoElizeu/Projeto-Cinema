@@ -1,115 +1,120 @@
- /*Aba de fotos da página*/
-.fotos{
+/* Aba de fotos da página */
+.fotos {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    
 }
-.banner{
+
+.banner {
     width: 100%;
     height: 100%;
     position: relative;
 }
-.bannerCard{
-    overflow: hidden; height: 15em; width: 80em;
+
+.bannerCard {
+    overflow: hidden;
+    height: 15em;
+    width: 80em;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
     position: relative;
-
+    z-index: 1;
 }
-.Pfp{
+
+.Pfp {
     position: absolute;
-    transform: translate(-35em, 1em);
+    transform: translate(-40em, 1em);
     border-radius: 10px;
     width: 10em;
     height: 10em;
     border: solid 1px white;
     z-index: 3;
 }
- /*Aba de nome do filme e comentários */
-.Explaination{
+
+/* Aba de nome do filme e comentários */
+.Explaination {
     border-radius: 10px;
     color: white;
     padding: 10px;
-    width: 25%;
+    width: 30%;
     display: flex;
     margin: auto;
     transform: translateX(-4em);
-    display: flex;
     flex-direction: column;
-    z-index: 2;
     position: relative;
     margin-bottom: 70px;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.5); /* Adicionando fundo semitransparente */
 }
 
-.SessionController{
+.Explaination h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.Explaination p {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+
+/* Seção de sessões de filmes */
+.SessionController {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 13em;
+    height: auto;
     position: relative;
-    bottom:10em;
 }
 
-.Sessions{
+.Sessions {
     background-color: #212f47;
     padding: 2em;
     width: 60%;
-    height: 7em;
+    max-width: 80%;
+    height: auto;
     border-radius: 5px;
     color: white;
-    margin: 10px;
-
+    margin: 1em;
+    top: 1em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-.Sessions:last-child{
+
+/* Apenas a última sessão da lista terá um espaço extra */
+.SessionController:last-of-type .Sessions {
     margin-bottom: 10em;
 }
- /*Aba dos botões*/
- .custom-button {
+
+/* Botões personalizados */
+.custom-button {
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
-    background-color: #131b29; /* Cor de fundo inicial */
+    background-color: #131b29;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     text-align: center;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s, transform 0.2s ease, box-shadow 0.3s;
 }
 
 .custom-button:hover {
+    background-color: #444;
     border: 1px solid white;
-    transform: scale(1.1); /* Efeito de aumento ao passar o mouse */
+    transform: scale(1.1);
 }
 
 .custom-button:focus {
-    outline: none; /* Remove o contorno padrão de foco */
+    outline: none;
 }
 
-/* Adiciona um efeito de clique */
 .custom-button:active {
-    transform: scale(0.95); /* Efeito de clique (botão encolhe) */
+    transform: scale(0.95);
 }
-/*Isso é só pra ter altura*/
-.Fakefooter {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 15em;
-    background-color: beige;; /* Cor de fundo */
-    color: black; /* Cor do texto */
-    text-align: center;
-    font-size: 1em;
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
-    font-family: "Raleway";
-}
-
 
 /* Estilo geral para a barra de seleção de datas */
 .daysBar {
@@ -147,7 +152,7 @@
 
 /* Efeito ao passar o mouse sobre o botão de data */
 .radio-wrapper button:hover {
-    background-color: #333;
+    background-color: #444;
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
