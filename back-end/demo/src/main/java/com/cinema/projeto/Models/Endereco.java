@@ -1,31 +1,40 @@
 package com.cinema.projeto.Models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @AllArgsConstructor
 @Table(name="Endereco")
 public class Endereco {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long enderecoId;
-	private String cep;
-	private String logradouro;
-	private String numero;
-	private String complemento;
-	private String bairro;
-	private String cidade;
-	private String uf;
+	    
+		@Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Long enderecoId;
+	    private String cep;
+	    private String logradouro;
+	    private String numero;
+	    private String complemento;
+	    private String bairro;
+	    private String cidade;
+	    private String uf;
+	 
+	    @ManyToOne(cascade = CascadeType.ALL)  // Essa linha irá garantir que o Cinema seja salvo automaticamente
+	    @JoinColumn(name = "Id_Cinema")
+	    private Cinema cinema;
+
+	public Endereco() {
+	}
 	
 	public Endereco(Long enderecoId, String cep, String logradouro, String numero, String complemento, String bairro,
-			String cidade, String uf) {
+			String cidade, String uf, Cinema cinema) {
 		super();
 		this.enderecoId = enderecoId;
 		this.cep = cep;
@@ -35,6 +44,7 @@ public class Endereco {
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.uf = uf;
+		this.cinema = cinema;
 	}
 	
 	public Long getEnderecoId() {
@@ -85,6 +95,12 @@ public class Endereco {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-	
+	public Cinema getCinema() {
+		return cinema;
+	}
+
+	public void setCinema(Cinema cinema) {
+		this.cinema = cinema;
+	}
 	
 }

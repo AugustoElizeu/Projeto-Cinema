@@ -4,40 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name="Cinemas")
 public class Cinema {
 		
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long cinemaId;
-	private String nomeFantasia;
-	private String razaoSocial;
-	private String cnpj;
-	private String urlCineIcon;
-	private String urlCineBanner;
-	private Boolean habilitado;
-	private Double valorIngresso;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "cinemas")
-	private List<Horario> horario = new ArrayList<>();
-	
-	
-	
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long cinemaId;
+    private String nomeFantasia;
+    private String razaoSocial;
+    private String cnpj;
+    private String urlCineIcon;
+    private String urlCineBanner;
+    private Boolean habilitado;
+    private Double valorIngresso;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "cinemas")
+    private List<Horario> horario = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "cinema") // O mappedBy deve ser "cinema", que é o nome do atributo na classe Endereco
+    private List<Endereco> enderecos;
+
 	public Cinema() {
-		
 	}
 	
 	public Cinema(Long cinemaId, String nomeFantasia, String razaoSocial, String cnpj,String urlCineIcon ,String urlCineBanner,Boolean habilitado,Double valorIngresso) {
@@ -115,5 +115,6 @@ public class Cinema {
 	public void setValorIngresso(Double valorIngresso) {
 		this.valorIngresso = valorIngresso;
 	}
+	
     
 }

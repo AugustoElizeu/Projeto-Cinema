@@ -8,9 +8,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.cinema.projeto.Models.Cinema;
+import com.cinema.projeto.Models.Endereco;
 import com.cinema.projeto.Models.Filme;
 import com.cinema.projeto.Models.Horario;
 import com.cinema.projeto.Repositories.CinemaRepository;
+import com.cinema.projeto.Repositories.EnderecoRepository;
 import com.cinema.projeto.Repositories.FilmeRepository;
 import com.cinema.projeto.Repositories.HorarioRepository;
 
@@ -26,6 +28,8 @@ public class CinemaApplication implements CommandLineRunner {
 	@Autowired
 	private CinemaRepository cinemaRepository;
 	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CinemaApplication.class, args);
@@ -43,7 +47,9 @@ public class CinemaApplication implements CommandLineRunner {
 	    Horario novoHorario1 = new Horario(null,"18:30",LocalDate.of(2025, 2, 9),novoFilme, novoCinema2);
 	    Horario novoHorario2 = new Horario(null,"21:00",LocalDate.of(2025, 2, 9),novoFilme2, novoCinema);
 	    Horario novoHorario4 = new Horario(null,"17:00",LocalDate.of(2025, 2, 9),novoFilme2, novoCinema);
+		Endereco novoEndereco = new Endereco(null,"1","2","3","4","5","6","7",novoCinema);
 	    // Salvando o usuário no banco de dados
+	    enderecoRepository.save(novoEndereco);
 	    filmeRepository.save(novoFilme);
 	    filmeRepository.save(novoFilme2);
 	    cinemaRepository.save(novoCinema);

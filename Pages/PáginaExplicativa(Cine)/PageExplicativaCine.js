@@ -65,19 +65,52 @@ async function carregarDetalhesCinema() {
         const title = document.createElement('h1');
         title.textContent = cinema.nomeFantasia || 'Nome não disponível';
 
-        const endereco = document.createElement('p');
-        endereco.innerHTML = `Endereço: <span>${cinema.razaoSocial || 'Endereço não disponível'}</span>`;
-
         const cnpj = document.createElement('p');
-        cnpj.innerHTML = `CNPJ: <span>${cinema.cnpj || 'CNPJ não disponível'}</span>`;
-
+        cnpj.innerHTML = `<strong>CNPJ:</strong> ${cinema.cnpj || 'Não disponível'}`;
+        
         const habilitado = document.createElement('p');
-        habilitado.textContent = `Habilitado: ${cinema.habilidado ? 'Sim' : 'Não'}`;
+        habilitado.innerHTML = `<strong>Habilitado:</strong> ${cinema.habilidado ? 'Sim' : 'Não'}`;
+
+        const enderecoDiv = document.createElement('div');
+        enderecoDiv.id = 'endereco';
+
+        try {
+            const enderecoResponse = await fetch('http://localhost:8080/api/endereco');
+            if (!enderecoResponse.ok) throw new Error('Erro ao carregar os endereços');
+
+            const enderecos = await enderecoResponse.json();
+            const enderecoCinema = enderecos.find(e => e.cinema && e.cinema.cinemaId == cinemaId);
+
+            if (enderecoCinema) {
+                const logradouro = document.createElement('p');
+                logradouro.innerHTML = `<strong>Logradouro:</strong> ${enderecoCinema.logradouro || 'Não disponível'}`;
+                
+                const bairro = document.createElement('p');
+                bairro.innerHTML = `<strong>Bairro:</strong> ${enderecoCinema.bairro || 'Não disponível'}`;
+                
+                const cidade = document.createElement('p');
+                cidade.innerHTML = `<strong>Cidade:</strong> ${enderecoCinema.cidade || 'Não disponível'}`;
+                
+                const uf = document.createElement('p');
+                uf.innerHTML = `<strong>UF:</strong> ${enderecoCinema.uf || 'Não disponível'}`;
+                
+                enderecoDiv.appendChild(logradouro);
+                enderecoDiv.appendChild(bairro);
+                enderecoDiv.appendChild(cidade);
+                enderecoDiv.appendChild(uf);
+            } else {
+                const enderecoNaoDisponivel = document.createElement('p');
+                enderecoNaoDisponivel.textContent = 'Endereço não disponível';
+                enderecoDiv.appendChild(enderecoNaoDisponivel);
+            }
+        } catch (error) {
+            console.error('Erro ao carregar os endereços:', error);
+        }
 
         explainationDiv.appendChild(title);
-        explainationDiv.appendChild(endereco);
         explainationDiv.appendChild(cnpj);
         explainationDiv.appendChild(habilitado);
+        explainationDiv.appendChild(enderecoDiv);
 
         explainCard.appendChild(fotos);
         explainCard.appendChild(explainationDiv);
@@ -87,6 +120,8 @@ async function carregarDetalhesCinema() {
         console.error('Erro ao carregar os detalhes do cinema:', error);
     }
 }
+
+
 
 // Função para carregar os horários e armazenar em cache
 async function carregarHorarios() {
